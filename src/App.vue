@@ -1,32 +1,26 @@
+<!--
+ * @Author: 高歌
+ * @Date: 2020-10-09 14:41:14
+ * @LastEditTime: 2020-10-09 14:44:42
+ * @LastEditors: 高歌
+ * @FilePath: /cooker/src/App.vue
+ * @Description:
+-->
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+  <div class="cooker">
+    <router-view></router-view>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+export default {
+
 }
+</script>
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+<style lang="scss">
+body {
+  margin: 0;
+  padding: 0;
 }
 </style>
