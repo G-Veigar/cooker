@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import cookerRender from '@/core/render/index.vue'
+import cookerRender from '@/core/render/vue/index.vue'
 
 export default {
   components: { cookerRender },

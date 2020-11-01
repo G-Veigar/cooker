@@ -18,12 +18,17 @@
         </ul>
       </li>
     </ul>
+    <tree-tool></tree-tool>
   </div>
 </template>
 
 <script>
-export default {
+import treeTool from '../tree/index.vue'
 
+export default {
+  components: {
+    treeTool
+  }
 }
 </script>
 

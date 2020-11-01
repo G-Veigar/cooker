@@ -119,6 +119,20 @@ const schema = new Schema({
     float: 'none',
     clear: 'both'
   },
+  eventHandles: {
+    click: {
+      once: false,
+      decorator: [
+        {
+          name: 'debounce',
+          params: [500]
+        }
+      ],
+      handle () {
+        console.log('clicked!')
+      }
+    }
+  },
   children: [
     {
       tag: 'p',

@@ -9,12 +9,16 @@
       <el-input type="text" placeholder="请输入背景图片URL"></el-input>
     </div>
     <div class="input-item">
-      <div class="input-label">大小：</div>
+      <div class="input-label">尺寸：</div>
       <background-size-input></background-size-input>
     </div>
     <div class="input-item">
       <div class="input-label">重复显示：</div>
       <background-repeat-input></background-repeat-input>
+    </div>
+    <div class="input-item">
+      <div class="input-label">位置：</div>
+      <background-position-input></background-position-input>
     </div>
   </div>
 </template>
@@ -23,12 +27,14 @@
 import colorSelector from '../color-selector/index.vue'
 import backgroundSizeInput from './components/background-size-input/index.vue'
 import backgroundRepeatInput from './components/background-repeat-input/index.vue'
+import backgroundPositionInput from './components/background-position-input/index.vue'
 
 export default {
   components: {
     colorSelector,
     backgroundSizeInput,
-    backgroundRepeatInput
+    backgroundRepeatInput,
+    backgroundPositionInput
   },
   data () {
     return {

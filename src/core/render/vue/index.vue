@@ -1,7 +1,8 @@
 
 <script>
 // eslint-disable-next-line no-unused-vars
-import { styleCreater, styleParser } from './style-parser/index.js'
+import { extractStyle, createStyle } from './style-parser/index3.js'
+import { parseEventHandle } from './event-parser/index.js'
 
 export default {
   data () {
@@ -27,24 +28,32 @@ export default {
   methods: {
     // 将schema描述对象解析为渲染函数参数
     schema2RenderParmas (schema, h, cssStyle) {
+      const res = {
+        tag: schema.tag,
+        attribute: {
+          attrs: {
+            id: schema.nodeId
+          },
+          class: {
+            root: true
+          }
+        }
+      }
       if (!cssStyle) {
         cssStyle = {}
       }
-      const tag = schema.tag
-      const attribute = {
-        attrs: {
-          id: schema.nodeId
-        },
-        class: {
-          root: true
-        }
-      }
       // 处理 style
       if (schema.style) {
-        cssStyle = styleParser(schema.style, cssStyle)
+        const nodeStyle = extractStyle(schema)
+        cssStyle[nodeStyle.selector] = nodeStyle.styleObj
+      }
+      // 处理 eventHandles
+      if (schema.eventHandles) {
+        const handles = parseEventHandle(schema.eventHandles)
+        res.on = handles.on
       }
       if (schema.text) {
-        attribute.domProps = {
+        res.attribute.domProps = {
           innerText: schema.text
         }
       }
@@ -55,12 +64,8 @@ export default {
           return h(tag, attribute, children)
         })
       }
-      return {
-        tag,
-        attribute,
-        children,
-        cssStyle
-      }
+      res.children = children
+      return res
     },
     editModelInit (el) {
       // 兼容来自编辑器的数据
@@ -91,7 +96,7 @@ export default {
   render (h) {
     // eslint-disable-next-line no-unused-vars
     const { tag, attribute, children, cssStyle } = this.schema2RenderParmas(this.schemaData, h)
-    console.log('cssStyle', cssStyle)
+    createStyle(cssStyle)
     return h('div', {
       attrs: {
         id: 'cooker-app'

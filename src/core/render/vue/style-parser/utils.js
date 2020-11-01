@@ -22,7 +22,7 @@ function styleStringify (selector, style) {
 function createStyleElement (styleText) {
   var style = document.createElement('style')
   style.innerText = styleText
-  document.body.appendChild(style)
+  document.head.appendChild(style)
 }
 
 export {
