@@ -49,8 +49,8 @@ export default {
       }
       // 处理 eventHandles
       if (schema.eventHandles) {
-        const handles = parseEventHandle(schema.eventHandles)
-        res.on = handles.on
+        const handles = parseEventHandle(schema)
+        res.attribute.on = handles.on
       }
       if (schema.text) {
         res.attribute.domProps = {

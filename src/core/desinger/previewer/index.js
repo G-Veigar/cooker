@@ -14,7 +14,7 @@ class Previewer {
     }
     this._options = options
     this._messageHandles = {}
-    this.createViewer()
+    this.createIframe()
     if (!Previewer.listening) {
       window.addEventListener('message', (e) => {
         const { type, data } = e.data
@@ -27,7 +27,7 @@ class Previewer {
     }
   }
 
-  createViewer () {
+  createIframe () {
     const iframe = document.createElement('iframe')
     iframe.src = this._options.src
     this._el.appendChild(iframe)

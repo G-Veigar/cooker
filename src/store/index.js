@@ -1,24 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import schema from '@/core/schema'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    schemaNodeMap: {
-      100: {
-        tag: 'div'
-      },
-      111: {
-        tag: 'p',
-        text: 'p111'
-      },
-      123: {
-        tag: 'p',
-        text: 'p222'
-      }
-    },
-    currentNodeId: ''
+    schemaData: schema.nodeTree
   },
   getters: {
     currentNode (state) {

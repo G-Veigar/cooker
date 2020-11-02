@@ -1,6 +1,5 @@
 <template>
   <div id="desinger">
-    <router-view></router-view>
     <co-toolbar></co-toolbar>
     <co-previewer
       ref="previewer"

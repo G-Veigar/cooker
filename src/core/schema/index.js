@@ -128,15 +128,17 @@ const schema = new Schema({
           params: [500]
         }
       ],
-      handle () {
-        console.log('clicked!')
+      // TAG: schema中函数如何表示？
+      handle: {
+        params: [],
+        body: "console.log('hehe')"
       }
     }
   },
   children: [
     {
       tag: 'p',
-      text: 'p111',
+      text: 'p11111',
       nodeId: '111'
     },
     {

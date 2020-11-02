@@ -1,6 +1,6 @@
 <template>
   <div class="cooker-app">
-    <cooker-render :schema="schema"></cooker-render>
+    <cooker-render :schema="schema" :editModel="true"></cooker-render>
   </div>
 </template>
 
@@ -21,10 +21,26 @@ export default {
         children: [
           {
             tag: 'h1',
-            text: 'app',
+            text: 'app 111',
             style: {
               text: {
                 color: '#bbb'
+              }
+            },
+            eventHandles: {
+              click: {
+                once: false,
+                decorator: [
+                  {
+                    name: 'debounce',
+                    params: [500]
+                  }
+                ],
+                // TAG: schema中函数如何表示？
+                handle: {
+                  params: [],
+                  body: "console.log('hehe')"
+                }
               }
             }
           }, {

@@ -14,8 +14,9 @@
 //           params: [500]
 //         }
 //       ],
-//       handle () {
-//         console.log('clicked!')
+//       handle: {
+//         params: null,
+//         body: "console.log('hehe')"
 //       }
 //     }
 //   }
@@ -26,9 +27,15 @@ function parseEventHandle (schemaNode) {
     on: {},
     nativeOn: {}
   }
-  const eventHandls = schemaNode.eventHandls
+  const eventHandls = schemaNode.eventHandles
   for (const event in eventHandls) {
-    res.on[event] = eventHandls[event].handle
+    const handleSchema = eventHandls[event].handle
+    const { params, body } = handleSchema
+    const funParams = [...params, body]
+    // eslint-disable-next-line no-new-func
+    const handle = new Function(...funParams)
+    res.on[event] = handle
+    console.log('parseEventHandle', handle)
   }
   return res
 }
