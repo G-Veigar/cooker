@@ -9,10 +9,10 @@
 <template>
   <div class="text-bar">
     <div class="item font-size">
-      <size-selector v-model="fontSize"></size-selector>
+      <size-selector :value="fontSize" @input="handleSizeInput"></size-selector>
     </div>
     <div class="item color-item">
-      <color-selector v-model="color"></color-selector>
+      <color-selector :value="color" @input="handleColorInput"></color-selector>
     </div>
     <div
       class="item"
@@ -54,7 +54,7 @@ export default {
   },
   data () {
     return {
-      color: '#fff',
+      color: '#000',
       fontSize: 16,
       bold: false, // 加粗
       italic: false, // 倾斜
@@ -68,8 +68,19 @@ export default {
     }
   },
   methods: {
+    handleSizeInput (val) {
+      this.fontSize = val
+      this.node.style.fontSize = val + 'px'
+    },
+    handleColorInput (val) {
+      this.color = val
+      this.node.style.color = val
+    },
     initStyle (style) {
       if (!style) return
+      if (style.color) {
+        this.color = style.color
+      }
       if (style.fontSize) {
         this.fontSize = parseInt(style.fontSize)
       }
