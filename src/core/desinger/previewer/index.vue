@@ -21,11 +21,12 @@
 
 <script>
 import Previewer from './index.js'
+import schema from '@/core/schema'
 
 export default {
   data () {
     return {
-      mode: 'edit' // 编辑状态：true，预览状态：false
+      mode: 'edit'
     }
   },
   methods: {
@@ -43,16 +44,19 @@ export default {
     initPreview () {
       // 只读模式预览器
       this.viewerPre = new Previewer('#viewer-readonly', {
-        src: '/app',
-        mode: this.mode
+        src: '/app?mode=preview'
       })
-      // preview.emit()
+      setTimeout(() => {
+        this.viewerPre.emit({
+          type: 'schema',
+          data: schema.nodeTree
+        })
+      }, 1000)
     }
   },
   mounted () {
     this.viewer = new Previewer('#viewer-editable', {
-      src: '/app',
-      mode: this.mode
+      src: '/app'
     })
 
     this.viewer.on('currentElChange', data => {

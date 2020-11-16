@@ -26,26 +26,17 @@ export default {
     }
   },
   mounted () {
-    setTimeout(() => {
+    setInterval(() => {
       // console.log('nodeTree', schema.nodeTree)
       this.$refs.previewer.emit({
         type: 'schema',
         data: schema.nodeTree
       })
-    }, 3000)
+    }, 2000)
 
     setTimeout(() => {
       schema.appendChild('div')
-
-      // console.log(schema.nodeTree)
-
-      setTimeout(() => {
-        this.$refs.previewer.emit({
-          type: 'schema',
-          data: schema.nodeTree
-        })
-      }, 1000)
-    }, 6000)
+    }, 2000)
   }
 }
 </script>

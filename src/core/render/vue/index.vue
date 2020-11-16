@@ -7,7 +7,6 @@ import { parseEventHandle } from './event-parser/index.js'
 export default {
   data () {
     return {
-      editorSchema: {}
     }
   },
   props: {
@@ -15,14 +14,14 @@ export default {
       type: Object,
       require: true
     },
-    editModel: { // 编辑模式
+    editMode: { // 编辑模式
       type: Boolean,
-      default: true
+      default: false
     }
   },
   computed: {
     schemaData () {
-      return this.editModel ? this.editorSchema : this.schema
+      return this.schema
     }
   },
   methods: {
@@ -46,6 +45,7 @@ export default {
       if (schema.style) {
         const nodeStyle = extractStyle(schema)
         cssStyle[nodeStyle.selector] = nodeStyle.styleObj
+        res.attribute.style = schema.style
       }
       // 处理 eventHandles
       if (schema.eventHandles) {
@@ -67,14 +67,7 @@ export default {
       res.children = children
       return res
     },
-    editModelInit (el) {
-      // 兼容来自编辑器的数据
-      window.addEventListener('message', e => {
-        const { type, data } = e.data
-        if (type === 'schema') {
-          this.editorSchema = data
-        }
-      }, false)
+    editModeInit (el) {
       // 点击选中态
       document.querySelector(el).addEventListener('click', (e) => {
         const activeEl = e.target
@@ -104,8 +97,8 @@ export default {
     }, [h(tag, attribute, children)])
   },
   mounted () {
-    if (this.editModel) {
-      this.editModelInit('#cooker-app')
+    if (this.editMode) {
+      this.editModeInit('#cooker-app')
     }
   }
 }

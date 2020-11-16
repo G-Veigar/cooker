@@ -8,9 +8,9 @@
 -->
 <template>
   <div class="editor">
-    <text-bar></text-bar>
+    <text-bar :node.sync="currentNode"></text-bar>
     <box-model :node.sync="currentNode"></box-model>
-    <background-setter></background-setter>
+    <background-setter :node.sync="currentNode"></background-setter>
   </div>
 </template>
 

@@ -4,6 +4,10 @@ class Vnode {
     this.text = type
     this.style = {}
   }
+
+  setStyle (key, val) {
+    this.style[key] = val
+  }
 }
 
 export default Vnode

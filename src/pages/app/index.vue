@@ -1,60 +1,30 @@
 <template>
   <div class="cooker-app">
-    <cooker-render :schema="schema" :editModel="true"></cooker-render>
+    <cooker-render :schema="schema" :editMode="editMode"></cooker-render>
   </div>
 </template>
 
 <script>
 import cookerRender from '@/core/render/vue/index.vue'
 
+const editMode = !(window.location.href.includes('preview'))
+
 export default {
   components: { cookerRender },
   data () {
     return {
-      schema: {
-        tag: 'div',
-        style: {
-          text: {
-            color: '#aaa'
-          }
-        },
-        children: [
-          {
-            tag: 'h1',
-            text: 'app 111',
-            style: {
-              text: {
-                color: '#bbb'
-              }
-            },
-            eventHandles: {
-              click: {
-                once: false,
-                decorator: [
-                  {
-                    name: 'debounce',
-                    params: [500]
-                  }
-                ],
-                // TAG: schema中函数如何表示？
-                handle: {
-                  params: [],
-                  body: "console.log('hehe')"
-                }
-              }
-            }
-          }, {
-            tag: 'p',
-            children: [
-              {
-                tag: 'span',
-                text: 'aaaaa'
-              }
-            ]
-          }
-        ]
-      }
+      editMode,
+      schema: {}
     }
+  },
+  mounted () {
+    // 兼容来自编辑器的数据
+    window.addEventListener('message', e => {
+      const { type, data } = e.data
+      if (type === 'schema') {
+        this.schema = data
+      }
+    }, false)
   }
 }
 </script>

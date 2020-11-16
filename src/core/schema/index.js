@@ -67,84 +67,90 @@ const schema = new Schema({
   style: { // 遵循
     // 文本和字体
     // 暂不支持list: font-variant, direction, unicode-bidi
-    color: '#aaa',
-    fontSize: 16,
-    fontFamily: '',
-    fontWeight: '',
-    fontStyle: '', // normal italic oblique
-    letterSpacing: 2,
-    lineHeight: 20,
-    textAlign: 'left', // left center right justify,
-    textDecoration: '', // none underline overline line-through blink
-    textIndent: 2,
-    textShadow: '2px 2px #ff0000',
-    textTransform: 'uppercase;', // none capitalize uppercase lowercase
-    textOverflow: 'ellipsis',
-    verticalAlign: '',
-    whiteSpace: 'nowrap',
-    wordSpacing: 10,
+    color: '#333'
+    // fontSize: 16,
+    // fontFamily: '',
+    // fontWeight: '',
+    // fontStyle: '', // normal italic oblique
+    // letterSpacing: 2,
+    // lineHeight: 20
+    // textAlign: 'left', // left center right justify,
+    // textDecoration: '', // none underline overline line-through blink
+    // textIndent: 2,
+    // textShadow: '2px 2px #ff0000',
+    // textTransform: 'uppercase;', // none capitalize uppercase lowercase
+    // textOverflow: 'ellipsis',
+    // verticalAlign: '',
+    // whiteSpace: 'nowrap',
+    // wordSpacing: 10
     // 盒模型
-    width: 120,
-    maxWidth: 200,
-    minWidth: 100,
-    height: 120,
-    maxHeight: 200,
-    minHeight: 100,
+    // width: 120,
+    // maxWidth: 200,
+    // minWidth: 100,
+    // height: 120,
+    // maxHeight: 200,
+    // minHeight: 100,
     // padding
-    paddingLeft: 0,
-    paddingTop: 0,
-    paddingRight: 0,
-    paddingBottom: 0,
+    // paddingLeft: 0,
+    // paddingTop: 0,
+    // paddingRight: 0,
+    // paddingBottom: 0,
     // margin
-    marginLeft: 0,
-    marginTop: 0,
-    marginRight: 0,
-    marginBottom: 0,
+    // marginLeft: 0,
+    // marginTop: 0,
+    // marginRight: 0,
+    // marginBottom: 0,
     // border
-    border: '', // TODO: border生成
-    boxShadow: '', // TODO: boxShadow生成
+    // border: '', // TODO: border生成
+    // boxShadow: '', // TODO: boxShadow生成
     // background
-    background: '', // TODO: background生成
+    // background: '', // TODO: background生成
     // display
-    display: '',
+    // display: '',
     // position
-    position: '',
-    left: 0,
-    top: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 1,
-    visibility: 'hidden',
-    overflow: 'hidden',
-    float: 'none',
-    clear: 'both'
-  },
-  eventHandles: {
-    click: {
-      once: false,
-      decorator: [
-        {
-          name: 'debounce',
-          params: [500]
-        }
-      ],
-      // TAG: schema中函数如何表示？
-      handle: {
-        params: [],
-        body: "console.log('hehe')"
-      }
-    }
+    // position: '',
+    // left: 0,
+    // top: 0,
+    // right: 0,
+    // bottom: 0,
+    // zIndex: 1,
+    // visibility: 'hidden',
+    // overflow: 'hidden',
+    // float: 'none',
+    // clear: 'both'
   },
   children: [
     {
       tag: 'p',
       text: 'p11111',
-      nodeId: '111'
+      nodeId: '111',
+      style: {
+        fontWeight: 'bold'
+      }
     },
     {
       tag: 'p',
       nodeId: '123',
-      text: 'p222'
+      text: 'p222',
+      style: {
+        color: '#369'
+      },
+      eventHandles: {
+        click: {
+          once: false,
+          decorator: [
+            {
+              name: 'debounce',
+              params: [500]
+            }
+          ],
+          // TAG: schema中函数如何表示？
+          handle: {
+            params: [],
+            body: "alert('hehe')"
+          }
+        }
+      }
     }
   ]
 })
