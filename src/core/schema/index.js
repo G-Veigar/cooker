@@ -63,7 +63,7 @@ class Schema {
 const schema = new Schema({
   tag: 'div',
   type: 'element', // element: 原生标签
-  nodeId: '100',
+  nodeId: '001',
   style: { // 遵循
     // 文本和字体
     // 暂不支持list: font-variant, direction, unicode-bidi

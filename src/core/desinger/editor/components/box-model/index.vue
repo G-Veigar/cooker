@@ -99,7 +99,7 @@ export default {
     }
   },
   mounted () {
-    console.log('styleObject', this.styleObject)
+    // console.log('styleObject', this.styleObject)
   }
 }
 </script>

@@ -35,7 +35,6 @@ function parseEventHandle (schemaNode) {
     // eslint-disable-next-line no-new-func
     const handle = new Function(...funParams)
     res.on[event] = handle
-    console.log('parseEventHandle', handle)
   }
   return res
 }

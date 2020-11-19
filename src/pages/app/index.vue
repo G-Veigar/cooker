@@ -1,7 +1,5 @@
 <template>
-  <div class="cooker-app">
-    <cooker-render :schema="schema" :editMode="editMode"></cooker-render>
-  </div>
+  <cooker-render :schema="schema" :editMode="editMode"></cooker-render>
 </template>
 
 <script>
@@ -14,7 +12,7 @@ export default {
   data () {
     return {
       editMode,
-      schema: {}
+      schema: null
     }
   },
   mounted () {
