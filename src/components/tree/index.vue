@@ -1,24 +1,22 @@
 <template>
   <div class="tree">
-    <!-- <el-tree
-      :data="data"
-      node-key="id"
-      default-expand-all
-      :expand-on-click-node="false">
-      <span class="custom-tree-node" slot-scope="{ node }">
-        <span><i class="iconfont icon-Layer"></i>{{ node.label }} {{node.label}}</span>
-      </span>
-    </el-tree> -->
+    <tree-node label="page" :children="tree" isRoot="true"></tree-node>
   </div>
 </template>
 
 <script>
+import treeNode from './tree-node'
+
 export default {
+  components: {
+    treeNode
+  },
   data () {
     return {
-      data: [
+      tree: [
         {
           label: '一级 1',
+          icon: '',
           children: [{
             label: '二级 1-1',
             children: [{

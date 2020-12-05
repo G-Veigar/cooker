@@ -8,9 +8,24 @@
 -->
 <template>
   <div class="editor">
-    <text-bar :node.sync="currentNode"></text-bar>
-    <box-model :node.sync="currentNode"></box-model>
-    <background-setter :node.sync="currentNode"></background-setter>
+    <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+      <el-tab-pane label="样式属性" name="first">
+        <el-collapse v-model="activeNames" @change="handleChange">
+          <el-collapse-item title="盒模型" name="1">
+            <div class="box-model-wrapper">
+              <box-model :node.sync="currentNode"></box-model>
+            </div>
+          </el-collapse-item>
+          <el-collapse-item title="文本" name="2">
+            <text-bar :node.sync="currentNode"></text-bar>
+          </el-collapse-item>
+          <el-collapse-item title="背景" name="3">
+            <background-setter :node.sync="currentNode"></background-setter>
+          </el-collapse-item>
+        </el-collapse>
+      </el-tab-pane>
+      <el-tab-pane label="事件" name="second">事件</el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
@@ -28,7 +43,13 @@ export default {
   },
   data () {
     return {
+      activeNames: ['1'],
       currentNode: schema.currentNode
+    }
+  },
+  methods: {
+    handleChange (val) {
+      console.log(val)
     }
   },
   mounted () {
@@ -39,10 +60,35 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .editor {
   width: 360px;
   max-height: 100vh;
   overflow-y: auto;
+  border-left: 1px solid #ccc;
 }
+.box-model-wrapper {
+  display: flex;
+  justify-content: center;
+}
+</style>
+
+<style lang="scss">
+.editor {
+  .el-collapse-item__header {
+    height: 30px;
+    text-indent: 10px;
+    color: #555;
+  }
+
+  .el-collapse-item__wrap {
+    background-color: #F4F4F4;
+  }
+
+  .el-collapse-item__content {
+    padding: 10px;
+    // display: flex;
+  }
+}
+
 </style>

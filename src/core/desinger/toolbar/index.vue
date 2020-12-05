@@ -8,32 +8,84 @@
 -->
 <template>
   <div class="toolbar">
-    <ul>
-      <li>基础配置</li>
-      <li>路由</li>
-      <li>组件
-        <ul>
-          <li>文字</li>
-          <li>区块</li>
-        </ul>
-      </li>
-    </ul>
-    <tree-tool></tree-tool>
+    <left-bar :plugins="pluginList" :current="currentPluginName" @pluginChange="handlePluginChange"></left-bar>
+    <div class="tool-wrapper">
+      <component v-if="currentPluginComponent" :is="currentPluginComponent"></component>
+      <!-- <ul>
+        <li>基础配置</li>
+        <li>路由</li>
+        <li>组件
+          <ul>
+            <li>文字</li>
+            <li>区块</li>
+          </ul>
+        </li>
+      </ul>
+      <tree-tool></tree-tool>-->
+    </div>
   </div>
 </template>
 
 <script>
+import toolPlugins from './plugins/index.js'
+import leftBar from './left-bar.vue'
 import treeTool from '../tree/index.vue'
 
 export default {
+  data () {
+    return {
+      code: '',
+      currentPluginName: '',
+      pluginList: null, // 插件列表
+      pluginComponentMap: null // 插件名和组件对应的map
+    }
+  },
+  computed: {
+    currentPluginComponent () {
+      if (this.pluginComponentMap && this.currentPluginName) {
+        return this.pluginComponentMap[this.currentPluginName]
+      } else {
+        return null
+      }
+    }
+  },
+  watch: {
+    code (val) {
+      console.log(val)
+    }
+  },
+  methods: {
+    initPlugin () {
+      const pluginList = []
+      const pluginComponentMap = {}
+      toolPlugins.forEach(plugin => {
+        pluginList.push({
+          name: plugin.name,
+          icon: plugin.icon
+        })
+        pluginComponentMap[plugin.name] = plugin.component
+      })
+      this.currentPluginName = pluginList[0].name
+      this.pluginList = pluginList
+      this.pluginComponentMap = pluginComponentMap
+    },
+    handlePluginChange (name) {
+      this.currentPluginName = name
+    }
+  },
   components: {
+    leftBar,
     treeTool
+  },
+  created () {
+    this.initPlugin()
   }
 }
 </script>
 
 <style>
 .toolbar {
-  width: 200px;
+  width: 260px;
+  display: flex;
 }
 </style>
