@@ -8,7 +8,7 @@
 -->
 <template>
   <div class="editor">
-    <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+    <el-tabs type="card">
       <el-tab-pane label="样式属性" name="first">
         <el-collapse v-model="activeNames" @change="handleChange">
           <el-collapse-item title="盒模型" name="1">

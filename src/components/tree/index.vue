@@ -1,60 +1,55 @@
 <template>
   <div class="tree">
-    <tree-node label="page" :children="tree" isRoot="true"></tree-node>
+    <tree-node
+      label="page"
+      :children="data"
+      :isRoot="true"></tree-node>
   </div>
 </template>
 
 <script>
 import treeNode from './tree-node'
+import event from '@/utils/event'
+
+const provideData = {
+  currentNodeId: ''
+}
 
 export default {
   components: {
     treeNode
   },
+  props: {
+    data: {
+      type: Array || Object
+    },
+    labelKey: {
+      type: String,
+      default: 'label'
+    },
+    childrenKey: {
+      type: String,
+      default: 'children'
+    }
+  },
+  provide: {
+    provideData
+  },
   data () {
     return {
-      tree: [
-        {
-          label: '一级 1',
-          icon: '',
-          children: [{
-            label: '二级 1-1',
-            children: [{
-              label: '三级 1-1-1'
-            }]
-          }]
-        }, {
-          label: '一级 2',
-          children: [{
-            label: '二级 2-1',
-            children: [{
-              label: '三级 2-1-1'
-            }]
-          }, {
-            label: '二级 2-2',
-            children: [{
-              label: '三级 2-2-1'
-            }]
-          }]
-        }, {
-          label: '一级 3',
-          children: [{
-            label: '二级 3-1',
-            children: [{
-              label: '三级 3-1-1'
-            }]
-          }, {
-            label: '二级 3-2',
-            children: [{
-              label: '三级 3-2-1'
-            }]
-          }]
-        }]
+      provideData
     }
+  },
+  methods: {
+    handleNodeClick (id) {
+      this.provideData.currentNodeId = id
+    }
+  },
+  mounted () {
+    event.on('nodeClick', this.handleNodeClick)
   }
 }
 </script>
 
-<style>
-
+<style lang="scss">
 </style>

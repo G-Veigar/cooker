@@ -29,7 +29,7 @@
 <script>
 import toolPlugins from './plugins/index.js'
 import leftBar from './left-bar.vue'
-import treeTool from '../tree/index.vue'
+// import treeTool from '../tree/index.vue'
 
 export default {
   data () {
@@ -74,8 +74,7 @@ export default {
     }
   },
   components: {
-    leftBar,
-    treeTool
+    leftBar
   },
   created () {
     this.initPlugin()
@@ -83,9 +82,14 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .toolbar {
   width: 260px;
   display: flex;
+
+  .tool-wrapper {
+    width: 100%;
+    border-right: 1px solid #ccc;
+  }
 }
 </style>

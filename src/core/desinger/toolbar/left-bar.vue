@@ -44,7 +44,7 @@ $leftBar-wdith: 46px;
 .plugin-item {
   cursor: pointer;
   width: $leftBar-wdith;
-  height: 30px;
+  height: 36px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,8 +52,8 @@ $leftBar-wdith: 46px;
     background: #ccc;
   }
   .plugin-icon {
-    font-size: 18px;
-    color: #666;
+    font-size: 20px;
+    color: #555;
   }
 }
 </style>

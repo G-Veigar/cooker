@@ -43,6 +43,7 @@ class Schema {
       parentNode.children = []
     }
     parentNode.children.push(childNode)
+    this.emit('schemaChanged', this)
   }
 
   on (eventName, cb) {

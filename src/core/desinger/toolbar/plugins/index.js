@@ -5,12 +5,12 @@ import materialLib from './material-lib'
 const plugins = [
   {
     name: '物料库', // name唯一
-    icon: 'icon-zujian',
+    icon: 'icon-component',
     component: materialLib
   },
   {
     name: '组件树',
-    icon: 'icon-Tree',
+    icon: 'icon-node-tree',
     component: viewTree
   },
   {

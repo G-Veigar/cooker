@@ -1,17 +1,51 @@
 <template>
   <div class="view-tree">
-    <node-tree></node-tree>
+    <node-tree :data="treeData"></node-tree>
   </div>
 </template>
 
 <script>
 import nodeTree from '@/components/tree/index.vue'
+import schema from '@/core/schema'
 
 export default {
-  components: { nodeTree }
+  components: { nodeTree },
+  data () {
+    return {
+      // treeData: schema.nodeTree
+      treeData: [
+        {
+          icon: 'icon-text1',
+          label: '文本'
+        },
+        {
+          icon: 'icon-pic',
+          label: '图片',
+          children: []
+        },
+        {
+          icon: 'icon-attachent',
+          label: '链接',
+          children: []
+        }
+      ]
+    }
+  },
+  methods: {
+    initHandleSchemaChanged () {
+      schema.on('schemaChanged', schemaData => {
+        this.treeData = schemaData.nodeTree
+      })
+    }
+  },
+  created () {
+    this.initHandleSchemaChanged()
+  }
 }
 </script>
 
-<style>
-
+<style lang="scss">
+.view-tree {
+  padding: 10px 6px 0 0;
+}
 </style>
