@@ -18,7 +18,9 @@
           </div>
         </el-collapse-item>
         <el-collapse-item title="业务组件" name="business">
-          <div class="item-wrapper">item-wrapper-业务组件</div>
+          <div class="item-wrapper">
+            <material-item class="mt-item" name="容器" icon="icon-integral"></material-item>
+          </div>
         </el-collapse-item>
       </el-collapse>
     </div>
