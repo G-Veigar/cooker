@@ -8,18 +8,19 @@
     </div>
     <div class="component-wrapper">
       <el-collapse v-model="activeNames">
-        <el-collapse-item title="基础组件" name="base">
+        <el-collapse-item
+          v-for="item in materialList"
+          :key="item.title"
+          :title="item.title"
+          :name="item.title">
           <div class="item-wrapper">
-            <material-item class="mt-item" name="容器" icon="icon-integral"></material-item>
-            <material-item class="mt-item" name="文本" icon="icon-text1"></material-item>
-            <material-item class="mt-item" name="链接" icon="icon-attachent"></material-item>
-            <material-item class="mt-item" name="图片" icon="icon-pic"></material-item>
-            <material-item class="mt-item" name="按钮" icon="icon-anniu"></material-item>
-          </div>
-        </el-collapse-item>
-        <el-collapse-item title="业务组件" name="business">
-          <div class="item-wrapper">
-            <material-item class="mt-item" name="容器" icon="icon-integral"></material-item>
+            <material-item
+              v-for="component in item.components"
+              class="mt-item"
+              :dragImg="dragImgMap[component.name]"
+              :key="component.name"
+              :name="component.name"
+              :icon="component.icon"></material-item>
           </div>
         </el-collapse-item>
       </el-collapse>
@@ -29,17 +30,72 @@
 
 <script>
 import materialItem from './material-item'
+import event from '@/utils/event'
+
+const materialList = [
+  {
+    title: '基础组件',
+    components: [
+      {
+        name: '容器',
+        icon: 'icon-integral'
+      },
+      {
+        name: '文本',
+        icon: 'icon-text1'
+      },
+      {
+        name: '链接',
+        icon: 'icon-attachent'
+      },
+      {
+        name: '图片',
+        icon: 'icon-pic'
+      },
+      {
+        name: '按钮',
+        icon: 'icon-anniu'
+      }
+    ]
+  },
+  {
+    title: '高级组件',
+    components: [
+      {
+        name: '容器2',
+        icon: 'icon-integral'
+      }
+    ]
+  }
+]
 
 export default {
   components: { materialItem },
   data () {
     return {
       searchVal: '',
-      activeNames: [
-        'base',
-        'business'
-      ]
+      materialList,
+      activeNames: materialList.map(item => item.title),
+      dragImgMap: {}
     }
+  },
+  methods: {
+    createDragImgs () {
+      let dragList = []
+      materialList.forEach(item => {
+        dragList = [...dragList, ...item.components]
+      })
+      event.on('drag-img-created', res => {
+        console.log('drag-img-created', res)
+        this.dragImgMap = res
+      })
+      this.$nextTick(() => {
+        event.emit('create-drag-img', dragList)
+      })
+    }
+  },
+  mounted () {
+    this.createDragImgs()
   }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="material-item">
+  <div class="material-item" draggable @dragstart="handleDragstart">
     <div class="help-btn">
       <i class="iconfont icon-help"></i>
     </div>
@@ -16,6 +16,14 @@ export default {
     },
     name: {
       type: String
+    },
+    dragImg: {
+      type: [HTMLImageElement, HTMLCanvasElement]
+    }
+  },
+  methods: {
+    handleDragstart (e) {
+      e.dataTransfer.setDragImage(this.dragImg, 0, 0)
     }
   }
 }
@@ -28,7 +36,7 @@ export default {
   flex-direction: column;
   align-items: center;
   color: #555;
-  cursor: pointer;
+  cursor: move;
   border: 1px solid transparent;
   border-radius: 4px;
 
@@ -64,6 +72,7 @@ export default {
     background-color: #ffffff;
     .help-btn {
       visibility: visible;
+      cursor: help;
     }
     .material-name {
       color: #3490de;

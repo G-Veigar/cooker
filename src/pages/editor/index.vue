@@ -5,6 +5,7 @@
       ref="previewer"
       @currentElChange="handleCurrentElChange"></co-previewer>
     <co-editor></co-editor>
+    <drag-img></drag-img>
   </div>
 </template>
 
@@ -12,13 +13,15 @@
 import coToolbar from '@/core/desinger/toolbar/index.vue'
 import coEditor from '@/core/desinger/editor/index.vue'
 import coPreviewer from '@/core/desinger/previewer/index.vue'
+import dragImg from '@/components/drag-img/index.vue'
 import schema from '@/core/schema'
 
 export default {
   components: {
     coToolbar,
     coEditor,
-    coPreviewer
+    coPreviewer,
+    dragImg
   },
   methods: {
     handleCurrentElChange (data) {
