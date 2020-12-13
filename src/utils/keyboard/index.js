@@ -1,11 +1,15 @@
 import keyboardJS from 'keyboardjs'
+import Vue from 'vue'
 
 const keyboard = {
   init () {
     // 复制
     keyboardJS.on('command + c', (e) => {
       e.preventDefault()
-      console.log('复制')
+      Vue.prototype.$message({
+        message: '恭喜你，这是一条成功消息',
+        type: 'success'
+      })
     })
     // 粘贴
     keyboardJS.on('command + v', (e) => {
