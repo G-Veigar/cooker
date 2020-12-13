@@ -26,6 +26,9 @@ export default {
   methods: {
     handleCurrentElChange (data) {
       schema.setCurrentNode(data.nodeId)
+    },
+    handleKeyup (e) {
+      console.log('handleKeypress', e)
     }
   },
   mounted () {

@@ -10,18 +10,9 @@
   <div class="toolbar">
     <left-bar :plugins="pluginList" :current="currentPluginName" @pluginChange="handlePluginChange"></left-bar>
     <div class="tool-wrapper">
-      <component v-if="currentPluginComponent" :is="currentPluginComponent"></component>
-      <!-- <ul>
-        <li>基础配置</li>
-        <li>路由</li>
-        <li>组件
-          <ul>
-            <li>文字</li>
-            <li>区块</li>
-          </ul>
-        </li>
-      </ul>
-      <tree-tool></tree-tool>-->
+      <keep-alive>
+        <component v-if="currentPluginComponent" :is="currentPluginComponent"></component>
+      </keep-alive>
     </div>
   </div>
 </template>
@@ -29,7 +20,6 @@
 <script>
 import toolPlugins from './plugins/index.js'
 import leftBar from './left-bar.vue'
-// import treeTool from '../tree/index.vue'
 
 export default {
   data () {
