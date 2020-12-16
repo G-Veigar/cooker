@@ -31,43 +31,7 @@
 <script>
 import materialItem from './material-item'
 import event from '@/utils/event'
-
-const materialList = [
-  {
-    title: '基础组件',
-    components: [
-      {
-        name: '容器',
-        icon: 'icon-integral'
-      },
-      {
-        name: '文本',
-        icon: 'icon-text1'
-      },
-      {
-        name: '链接',
-        icon: 'icon-attachent'
-      },
-      {
-        name: '图片',
-        icon: 'icon-pic'
-      },
-      {
-        name: '按钮',
-        icon: 'icon-anniu'
-      }
-    ]
-  },
-  {
-    title: '高级组件',
-    components: [
-      {
-        name: '容器2',
-        icon: 'icon-integral'
-      }
-    ]
-  }
-]
+import { materialList } from './materials'
 
 export default {
   components: { materialItem },

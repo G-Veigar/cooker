@@ -11,19 +11,19 @@
       <div
         class="fold-btn"
         :class="{unfold: showChild}"
-        v-if="children && children.length > 0"
+        v-if="node.children && node.children.length > 0"
         @click="toggleShowChild">
         <i class="iconfont icon-triangle-right"></i>
       </div>
       <div
         class="node-main"
-        :class="{active: this.provideData.currentNodeId === label}"
+        :class="{active: this.provideData.currentNodeId === nodeData.id}"
         draggable
-        @dragstart="handleDragstart(label, $event)"
-        @click="toggleActive(label)">
+        @dragstart="handleDragstart(nodeData.name, $event)"
+        @click="toggleActive(nodeData.id)">
         <div class="node-label-wrapper">
-          <i class="iconfont node-icon" :class="icon" v-if="icon"></i>
-          <span class="node-label">{{label}}</span>
+          <i class="iconfont node-icon" :class="nodeData.icon" v-if="nodeData.icon"></i>
+          <span class="node-label">{{nodeData.name}}</span>
         </div>
         <div class="node-btn-wrapper">
           <div class="node-btn-item" @click="nodeAction('hide')" title="隐藏"><i class="iconfont icon-Notvisible"></i></div>
@@ -34,15 +34,14 @@
     </div>
     <!-- 子节点wrapper -->
     <div
-      v-if="children"
+      v-if="node.children"
       v-show="showChild"
       class="child-node-wrapper">
       <tree-node
-        v-for="item in children"
-        :icon="item.icon"
+        v-for="item in node.children"
+        :transverter="transverter"
         :key="item.label"
-        :label="item.label"
-        :children="item.children"></tree-node>
+        :node="item"></tree-node>
     </div>
   </div>
 </template>
@@ -59,14 +58,24 @@ export default {
       type: Boolean,
       default: false
     },
-    icon: { // iconfont
-      type: String
+    node: { // 节点数据
+      type: Object,
+      required: true
     },
-    label: {
-      type: String
+    name: { // 节点名
+      type: String,
+      required: false
     },
-    children: {
-      type: Array,
+    icon: { // 节点icon
+      type: String, // iconfont名
+      required: false
+    },
+    id: { // 节点id
+      type: String, // iconfont名
+      required: false
+    },
+    transverter: { // 转换函数，应用在节点上，返回包含节点label，和icon的对象
+      type: Function,
       required: false
     }
   },
@@ -74,6 +83,21 @@ export default {
   data () {
     return {
       showChild: false
+    }
+  },
+  computed: {
+    nodeData () {
+      if (this.name && this.icon && this.id) {
+        return {
+          name: this.name,
+          icon: this.icon,
+          id: this.id
+        }
+      } else if (this.transverter) {
+        return this.transverter(this.node)
+      } else {
+        return {}
+      }
     }
   },
   methods: {

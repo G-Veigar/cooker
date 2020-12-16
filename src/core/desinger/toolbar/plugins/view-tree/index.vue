@@ -1,18 +1,34 @@
 <template>
   <div class="view-tree">
-    <node-tree :data="treeData"></node-tree>
+    <!-- <node-tree :data="treeData" :transverter="treeTransverter"></node-tree> -->
+    <tree-node
+      :node="schemaData"
+      :transverter="treeTransverter"
+      :isRoot="true"></tree-node>
   </div>
 </template>
 
 <script>
-import nodeTree from '@/components/tree/index.vue'
+// import nodeTree from '@/components/tree/index.vue'
+import treeNode from '@/components/tree/tree-node'
 import schema from '@/core/schema'
 import { mapState } from 'vuex'
+import { materialIconMap } from '../material-lib/materials.js'
+import event from '@/utils/event'
+
+const provideData = {
+  currentNodeId: ''
+}
 
 export default {
-  components: { nodeTree },
+  components: { treeNode },
+  provide: {
+    provideData
+  },
   data () {
     return {
+      provideData,
+      materialIconMap,
       // treeData: schema.nodeTree
       treeData: [
         {
@@ -34,16 +50,33 @@ export default {
   },
   computed: {
     ...mapState(['schemaData'])
+    // materialTree () {
+    //   return materialIconMap
+    // }
   },
   methods: {
     initHandleSchemaChanged () {
       schema.on('schemaChanged', schemaData => {
         this.treeData = schemaData.nodeTree
       })
+    },
+    handleNodeClick (id) {
+      this.provideData.currentNodeId = id
+    },
+    treeTransverter (node) {
+      const thisMaterial = materialIconMap[node.tag]
+      return {
+        name: thisMaterial.name,
+        icon: thisMaterial.icon,
+        id: node.nodeId
+      }
     }
   },
   created () {
     this.initHandleSchemaChanged()
+  },
+  mounted () {
+    event.on('nodeClick', this.handleNodeClick)
   }
 }
 </script>
