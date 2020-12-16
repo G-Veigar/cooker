@@ -61,6 +61,7 @@ export default {
       })
     },
     handleNodeClick (id) {
+      schema.setCurrentNode(id)
       this.provideData.currentNodeId = id
     },
     treeTransverter (node) {

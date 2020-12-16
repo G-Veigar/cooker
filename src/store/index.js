@@ -6,7 +6,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    schemaData: schema.nodeTree
+    schemaData: schema.nodeTree,
+    currentNodeId: '' // active的node的id
   },
   getters: {
     currentNode (state) {
