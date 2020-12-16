@@ -1,22 +1,40 @@
 <template>
-  <div class="device device-iphone-x">
-    <div class="device-frame">
-      <div class="screen-main"></div>
-      <!-- <img class="device-content" src="..."> -->
-    </div>
-    <div class="device-stripe"></div>
-    <div class="device-header"></div>
-    <div class="device-sensors"></div>
-    <div class="device-btns"></div>
-    <div class="device-power"></div>
+  <div class="text">
+    rxjs
   </div>
 </template>
 
 <script>
-import '../core/desinger/previewer/style/devices.min.css'
+import { Observable } from 'rxjs'
+
+// eslint-disable-next-line no-unused-vars
+const observable = new Observable(subscriber => {
+  subscriber.next(1)
+  subscriber.next(2)
+  subscriber.next(3)
+  setTimeout(() => {
+    subscriber.next(4)
+    subscriber.complete()
+  }, 3000)
+})
+
+console.log('just before subscribe')
+
+observable.subscribe({
+  next (x) {
+    console.log('got value ' + x)
+  },
+  error (err) {
+    console.error('something wrong occurred: ' + err)
+  },
+  complete () {
+    console.log('done')
+  }
+})
+
+console.log('just after subscribe')
 
 export default {
-
 }
 </script>
 

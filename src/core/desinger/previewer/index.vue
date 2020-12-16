@@ -23,7 +23,7 @@
       </div>
       <!-- 右侧功能 -->
       <div class="right-tools">
-        <div class="qrcode-preview" title="二维码预览"><i class="iconfont icon-QRcode"></i></div>
+        <div class="qrcode-preview" @contextmenu="handleContextmenu" title="二维码预览"><i class="iconfont icon-QRcode"></i></div>
       </div>
     </div>
     <!-- main -->
@@ -57,6 +57,10 @@ export default {
     }
   },
   methods: {
+    handleContextmenu (e) {
+      console.log(e)
+      e.preventDefault()
+    },
     emit (data) {
       this.viewer.emit(data)
     },

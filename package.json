@@ -19,6 +19,7 @@
     "monaco-editor": "0.21.2",
     "postcss": "8.1.4",
     "postcss-js": "3.0.1",
+    "rxjs": "6.6.3",
     "vue": "^2.6.11",
     "vue-color": "2.7.1",
     "vue-router": "^3.2.0",

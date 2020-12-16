@@ -7,6 +7,7 @@
 <script>
 import nodeTree from '@/components/tree/index.vue'
 import schema from '@/core/schema'
+import { mapState } from 'vuex'
 
 export default {
   components: { nodeTree },
@@ -30,6 +31,9 @@ export default {
         }
       ]
     }
+  },
+  computed: {
+    ...mapState(['schemaData'])
   },
   methods: {
     initHandleSchemaChanged () {
