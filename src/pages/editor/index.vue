@@ -40,9 +40,9 @@ export default {
       })
     }, 2000)
 
-    setTimeout(() => {
-      schema.appendChild('div')
-    }, 2000)
+    // setTimeout(() => {
+    //   schema.appendChild('div')
+    // }, 2000)
   }
 }
 </script>

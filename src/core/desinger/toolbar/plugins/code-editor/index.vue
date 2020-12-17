@@ -15,10 +15,12 @@ export default {
     }
   },
   computed: {
-    ...mapState(['schemaData'])
+    ...mapState({
+      schemaNodeTree: state => state.schema.nodeTree
+    })
   },
   watch: {
-    schemaData: {
+    schemaNodeTree: {
       handler (val) {
         console.log('schema changed')
         this.code = JSON.stringify(val)

@@ -1,64 +1,61 @@
-// import store from '@/store'
+import store from '@/store'
 import Vnode from './vnode'
 
 class Schema {
-  constructor (nodeTree) {
-    this.initNodeTree(nodeTree)
-    this.currentNodeId = this.nodeTree.nodeId
-    this.currentNode = this.nodeTree
-    this.handleList = [] // event的回调数组
+  constructor (schemaData) {
+    // 初始化nodeTree
+    this.initNodeTree(schemaData)
+    this.setCurrentNode(this.nodeTree)
   }
 
-  // 初始化
-  initNodeTree (nodeTree) {
-    this.nodeTreeMap = {}
-    if (nodeTree) {
-      this.nodeTree = nodeTree
-      this.initNodeTreeMap(nodeTree)
+  get nodeTree () {
+    return store.state.schema.nodeTree
+  }
+
+  // 打平的nodeId和node节点的map结构
+  get nodeMap () {
+    return store.getters.nodeMap
+  }
+
+  get currentNode () {
+    return store.state.schema.currentNode
+  }
+
+  get currentNodeId () {
+    return store.state.schema.currentNodeId
+  }
+
+  // 初始化 nodeTree
+  initNodeTree (schemaData) {
+    if (schemaData) {
+      const nodeTree = new Vnode(schemaData)
+      store.commit('initSchema', nodeTree)
     }
   }
 
-  initNodeTreeMap (node) {
-    const nodeId = node.nodeId
-    this.nodeTreeMap[nodeId] = node
-    if (node.children && node.children.length > 0) {
-      for (let i = 0; i < node.children.length; i++) {
-        this.initNodeTreeMap(node.children[i])
+  // 设置当前节点
+  setCurrentNode (node) {
+    if (node instanceof Vnode) {
+      store.commit('setCurrentNode', node)
+    } else {
+      if (node in this.nodeMap) {
+        node = this.nodeMap[node]
+        store.commit('setCurrentNode', node)
+      } else {
+        console.error('schema.setCurrentNode参数为vnod类型或者nodeId')
       }
     }
   }
 
-  setCurrentNode (nodeId) {
-    if (nodeId !== this.currentNodeId) {
-      this.currentNodeId = nodeId
-      this.currentNode = this.nodeTreeMap[nodeId]
-      this.emit('currentNodeChange')
-    }
-  }
-
-  appendChild (child, parentNode) {
-    parentNode = parentNode || this.currentNode
-    const childNode = new Vnode(child)
-    if (!parentNode.children) {
-      parentNode.children = []
-    }
-    parentNode.children.push(childNode)
-    this.emit('schemaChanged', this)
-  }
-
-  on (eventName, cb) {
-    if (!this.handleList[eventName]) {
-      this.handleList[eventName] = []
-    }
-    this.handleList[eventName].push(cb)
-  }
-
-  emit (eventName, payload) {
-    const cbs = this.handleList[eventName]
-    cbs && cbs.forEach(cb => {
-      cb(payload)
-    })
-  }
+  // appendChild (child, parentNode) {
+  //   parentNode = parentNode || this.currentNode
+  //   const childNode = new Vnode(child)
+  //   if (!parentNode.children) {
+  //     parentNode.children = []
+  //   }
+  //   parentNode.children.push(childNode)
+  //   this.emit('schemaChanged', this)
+  // }
 }
 
 const schema = new Schema({
@@ -155,5 +152,7 @@ const schema = new Schema({
     }
   ]
 })
+
+console.log('nodeTreeMap', schema.nodeTreeMap)
 
 export default schema

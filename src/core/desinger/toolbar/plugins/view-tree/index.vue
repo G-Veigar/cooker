@@ -1,15 +1,13 @@
 <template>
   <div class="view-tree">
-    <!-- <node-tree :data="treeData" :transverter="treeTransverter"></node-tree> -->
     <tree-node
-      :node="schemaData"
+      :node="schemaNodeTree"
       :transverter="treeTransverter"
       :isRoot="true"></tree-node>
   </div>
 </template>
 
 <script>
-// import nodeTree from '@/components/tree/index.vue'
 import treeNode from '@/components/tree/tree-node'
 import schema from '@/core/schema'
 import { mapState } from 'vuex'
@@ -28,38 +26,15 @@ export default {
   data () {
     return {
       provideData,
-      materialIconMap,
-      // treeData: schema.nodeTree
-      treeData: [
-        {
-          icon: 'icon-text1',
-          label: '文本'
-        },
-        {
-          icon: 'icon-pic',
-          label: '图片',
-          children: []
-        },
-        {
-          icon: 'icon-attachent',
-          label: '链接',
-          children: []
-        }
-      ]
+      materialIconMap
     }
   },
   computed: {
-    ...mapState(['schemaData'])
-    // materialTree () {
-    //   return materialIconMap
-    // }
+    ...mapState({
+      schemaNodeTree: state => state.schema.nodeTree
+    })
   },
   methods: {
-    initHandleSchemaChanged () {
-      schema.on('schemaChanged', schemaData => {
-        this.treeData = schemaData.nodeTree
-      })
-    },
     handleNodeClick (id) {
       schema.setCurrentNode(id)
       this.provideData.currentNodeId = id
@@ -74,7 +49,6 @@ export default {
     }
   },
   created () {
-    this.initHandleSchemaChanged()
   },
   mounted () {
     event.on('nodeClick', this.handleNodeClick)

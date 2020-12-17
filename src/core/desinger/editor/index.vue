@@ -53,9 +53,6 @@ export default {
     }
   },
   mounted () {
-    schema.on('currentNodeChange', () => {
-      this.currentNode = schema.currentNode
-    })
   }
 }
 </script>
