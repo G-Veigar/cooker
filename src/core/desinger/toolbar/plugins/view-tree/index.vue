@@ -3,6 +3,7 @@
     <tree-node
       :node="schemaNodeTree"
       :transverter="treeTransverter"
+      :activeId="currentNodeId"
       :isRoot="true"></tree-node>
   </div>
 </template>
@@ -14,30 +15,22 @@ import { mapState } from 'vuex'
 import { materialIconMap } from '../material-lib/materials.js'
 import event from '@/utils/event'
 
-const provideData = {
-  currentNodeId: ''
-}
-
 export default {
   components: { treeNode },
-  provide: {
-    provideData
-  },
   data () {
     return {
-      provideData,
       materialIconMap
     }
   },
   computed: {
     ...mapState({
-      schemaNodeTree: state => state.schema.nodeTree
+      schemaNodeTree: state => state.schema.nodeTree,
+      currentNodeId: state => state.schema.currentNodeId
     })
   },
   methods: {
     handleNodeClick (id) {
       schema.setCurrentNode(id)
-      this.provideData.currentNodeId = id
     },
     treeTransverter (node) {
       const thisMaterial = materialIconMap[node.tag]

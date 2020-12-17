@@ -17,7 +17,7 @@
       </div>
       <div
         class="node-main"
-        :class="{active: this.provideData.currentNodeId === nodeData.id}"
+        :class="{active: this.activeId === nodeData.id}"
         draggable
         @dragstart="handleDragstart(nodeData.name, $event)"
         @click="toggleActive(nodeData.id)">
@@ -40,6 +40,7 @@
       <tree-node
         v-for="item in node.children"
         :transverter="transverter"
+        :activeId="activeId"
         :key="item.label"
         :node="item"></tree-node>
     </div>
@@ -71,7 +72,11 @@ export default {
       required: false
     },
     id: { // 节点id
-      type: String, // iconfont名
+      type: String,
+      required: false
+    },
+    activeId: { // 当前节点id
+      type: String,
       required: false
     },
     transverter: { // 转换函数，应用在节点上，返回包含节点label，和icon的对象
@@ -79,7 +84,6 @@ export default {
       required: false
     }
   },
-  inject: ['provideData'],
   data () {
     return {
       showChild: false

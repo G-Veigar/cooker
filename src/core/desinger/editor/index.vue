@@ -25,6 +25,7 @@
         </el-collapse>
       </el-tab-pane>
       <el-tab-pane label="事件" name="second">事件</el-tab-pane>
+      <!-- <el-tab-pane label="代码" name="second">代码</el-tab-pane> -->
     </el-tabs>
   </div>
 </template>
