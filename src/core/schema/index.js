@@ -47,6 +47,17 @@ class Schema {
     }
   }
 
+  createNode (options) {
+    options = {
+      tag: 'p',
+      text: 'hahaha',
+      nodeId: 'node343434'
+    }
+    const node = new Vnode(options)
+    this.currentNode.appendChild(node)
+    // return node
+  }
+
   // appendChild (child, parentNode) {
   //   parentNode = parentNode || this.currentNode
   //   const childNode = new Vnode(child)

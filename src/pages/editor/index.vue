@@ -3,7 +3,8 @@
     <co-toolbar></co-toolbar>
     <co-previewer
       ref="previewer"
-      @currentElChange="handleCurrentElChange"></co-previewer>
+      @currentElChange="handleCurrentElChange"
+      @dropedNode="handleDropedNode"></co-previewer>
     <co-editor></co-editor>
     <drag-img></drag-img>
   </div>
@@ -26,6 +27,10 @@ export default {
   methods: {
     handleCurrentElChange (data) {
       schema.setCurrentNode(data.nodeId)
+    },
+    handleDropedNode (e) {
+      const newNode = schema.createNode(e)
+      console.log('newNode', newNode, e)
     },
     handleKeyup (e) {
       console.log('handleKeypress', e)

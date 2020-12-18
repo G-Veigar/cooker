@@ -1,5 +1,8 @@
 <template>
-  <div class="material-item" draggable @dragstart="handleDragstart">
+  <div
+    class="material-item"
+    draggable
+    @dragstart="handleDragstart">
     <div class="help-btn">
       <i class="iconfont icon-help"></i>
     </div>
@@ -23,6 +26,9 @@ export default {
   },
   methods: {
     handleDragstart (e) {
+      const data = { name: this.name }
+      const dataStr = JSON.stringify(data)
+      e.dataTransfer.setData('label', dataStr)
       e.dataTransfer.setDragImage(this.dragImg, 0, 0)
     }
   }

@@ -26,6 +26,20 @@ export default {
     }
   },
   methods: {
+    handleDragover (e) {
+      e.preventDefault()
+      // console.log('handleDragover', e)
+    },
+    handleDrop (e) {
+      e.preventDefault()
+      const label = e.dataTransfer.getData('label')
+      const data = JSON.parse(label)
+      console.log('handleDrop', data)
+      window.parent.postMessage({
+        type: 'dropedNode',
+        data
+      }, '*')
+    },
     editModeInit (el) {
       // 点击选中态
       document.querySelector(el).addEventListener('click', (e) => {
@@ -52,6 +66,10 @@ export default {
     return h('div', {
       attrs: {
         id: 'cooker-app'
+      },
+      on: {
+        drop: this.editMode ? this.handleDrop : null,
+        dragover: this.editMode ? this.handleDragover : null
       }
     }, [h(element, attribute, children)])
   },

@@ -105,6 +105,9 @@ export default {
     this.viewer.on('currentElChange', data => {
       this.$emit('currentElChange', data)
     })
+    this.viewer.on('dropedNode', data => {
+      this.$emit('dropedNode', data)
+    })
   }
 }
 </script>

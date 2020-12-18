@@ -41,9 +41,6 @@ class Vnode {
   }
 }
 
-Vnode.createNode = function (nodeOptions) {
-  return Vnode(nodeOptions)
-}
 Vnode.cloneNode = function (node) {
   const newNode = cloneDeep(node)
   return newNode
