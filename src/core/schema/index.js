@@ -153,6 +153,4 @@ const schema = new Schema({
   ]
 })
 
-console.log('nodeTreeMap', schema.nodeTreeMap)
-
 export default schema

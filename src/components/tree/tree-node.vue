@@ -112,7 +112,9 @@ export default {
       console.log(action)
     },
     handleDragstart (label, e) {
-      e.dataTransfer.setData('label', label)
+      const data = { label }
+      const dataStr = JSON.stringify(data)
+      e.dataTransfer.setData('label', dataStr)
     },
     handleDragover: throttle(e => {
       const data = {

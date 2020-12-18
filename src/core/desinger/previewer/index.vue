@@ -28,7 +28,10 @@
     </div>
     <!-- main -->
     <div class="previewer-main">
-      <div class="viewer" id="viewer-editable" v-show="mode === 'edit'"></div>
+      <div
+        class="viewer"
+        id="viewer-editable"
+        v-show="mode === 'edit'"></div>
       <!-- 移动设备模拟器 -->
       <div class="device device-iphone-x mobile-device" v-show="mode === 'preview'">
         <div class="device-frame">
@@ -46,8 +49,9 @@
 
 <script>
 import Previewer from './index.js'
-import schema from '@/core/schema'
+// import schema from '@/core/schema'
 import './style/devices.min.css'
+import { mapState } from 'vuex'
 
 export default {
   data () {
@@ -55,6 +59,11 @@ export default {
       mode: 'edit',
       zoomVal: 100
     }
+  },
+  computed: {
+    ...mapState({
+      schemaNodeTree: state => state.schema.nodeTree
+    })
   },
   methods: {
     handleContextmenu (e) {
@@ -77,12 +86,15 @@ export default {
       this.viewerPre = new Previewer('#viewer-readonly', {
         src: '/app?mode=preview'
       })
-      setTimeout(() => {
+      this.$watch('schemaNodeTree', (newVal) => {
         this.viewerPre.emit({
           type: 'schema',
-          data: schema.nodeTree
+          data: newVal
         })
-      }, 1000)
+      }, {
+        deep: true,
+        immediate: true
+      })
     }
   },
   mounted () {

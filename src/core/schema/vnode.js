@@ -18,7 +18,7 @@ class Vnode {
     return newNode
   }
 
-  // 删除节点，只查找一个层级
+  // 删除子节点，（不会递归子节点的子节点）
   removeChild (node) {
     const child = this.children
     for (let i = 0; i < child.length; i++) {
@@ -29,6 +29,15 @@ class Vnode {
       }
     }
     return false
+  }
+
+  // 新增节点到结尾
+  appendChild (node) {
+    if (this.children) {
+      this.children.push(node)
+    } else {
+      this.children = [node]
+    }
   }
 }
 

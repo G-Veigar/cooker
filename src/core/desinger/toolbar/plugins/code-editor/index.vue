@@ -11,7 +11,7 @@ import { mapState } from 'vuex'
 export default {
   data () {
     return {
-      code: '{name: "222"}'
+      code: ''
     }
   },
   computed: {
@@ -22,10 +22,12 @@ export default {
   watch: {
     schemaNodeTree: {
       handler (val) {
-        console.log('schema changed')
+        const code = JSON.stringify(val)
+        console.log('code', code)
         this.code = JSON.stringify(val)
       },
-      deep: true
+      deep: true,
+      immediate: true
     }
   },
   components: {
