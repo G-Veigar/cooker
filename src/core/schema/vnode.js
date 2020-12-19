@@ -1,16 +1,23 @@
 import { cloneDeep } from 'lodash'
 import uid from '@/utils/uid'
+import Vue from 'vue'
 
 class Vnode {
   constructor (options) {
-    const { tag, nodeId, text, style = null } = options
-    this.nodeId = nodeId || uid()
+    const { parent, tag, nodeId, text, style = null } = options
+    this.nodeId = nodeId || uid() // 节点id
     this.tag = tag
     this.text = text
     this.style = style
-    this.mounted = false // 挂载状态
+    this.parent = parent || null // 父节点
+
     if (options.children) {
-      this.children = options.children.map(childItem => new Vnode(childItem))
+      this.children = options.children.map(childItem => {
+        return new Vnode({
+          ...childItem,
+          parent: this
+        })
+      })
     }
   }
 
@@ -37,8 +44,9 @@ class Vnode {
     if (this.children) {
       this.children.push(node)
     } else {
-      this.children = [node]
+      Vue.set(this, 'children', [node])
     }
+    node.parent = this // 父子关系绑定
   }
 }
 

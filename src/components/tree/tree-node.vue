@@ -109,7 +109,10 @@ export default {
       this.showChild = !this.showChild
     },
     nodeAction (action) {
-      console.log(action)
+      event.emit('nodeAction', {
+        action,
+        nodeId: this.node.nodeId
+      })
     },
     handleDragstart (label, e) {
       const data = { label }

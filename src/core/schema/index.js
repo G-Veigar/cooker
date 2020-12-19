@@ -25,6 +25,18 @@ class Schema {
     return store.state.schema.currentNodeId
   }
 
+  // 获取node节点 参数node可以使node对象，也可以使nodeId
+  _getNode (node) {
+    console.log('_getNode', node, this.nodeMap)
+    if (node instanceof Vnode) {
+      return node
+    } else if (node in this.nodeMap) {
+      return this.nodeMap[node]
+    } else {
+      throw new Error('未找到node节点')
+    }
+  }
+
   // 初始化 nodeTree
   initNodeTree (schemaData) {
     if (schemaData) {
@@ -35,16 +47,8 @@ class Schema {
 
   // 设置当前节点
   setCurrentNode (node) {
-    if (node instanceof Vnode) {
-      store.commit('setCurrentNode', node)
-    } else {
-      if (node in this.nodeMap) {
-        node = this.nodeMap[node]
-        store.commit('setCurrentNode', node)
-      } else {
-        console.error('schema.setCurrentNode参数为vnod类型或者nodeId')
-      }
-    }
+    node = this._getNode(node)
+    store.commit('setCurrentNode', node)
   }
 
   createNode (options) {
@@ -55,6 +59,11 @@ class Schema {
     const node = new Vnode(options)
     this.currentNode.appendChild(node)
     // return node
+  }
+
+  removeNode (node) {
+    node = this._getNode(node)
+    node.parent.removeChild(node)
   }
 
   // appendChild (child, parentNode) {

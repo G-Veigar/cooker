@@ -29,8 +29,17 @@ export default {
     })
   },
   methods: {
-    handleNodeClick (id) {
-      schema.setCurrentNode(id)
+    handleNodeClick (nodeId) {
+      schema.setCurrentNode(nodeId)
+    },
+    handleNodeDelete (nodeId) {
+      schema.removeNode(nodeId)
+    },
+    handleNodeAction (data) {
+      const { action, nodeId } = data
+      switch (action) {
+        case 'delete': this.handleNodeDelete(nodeId); break
+      }
     },
     treeTransverter (node) {
       const thisMaterial = materialIconMap[node.tag]
@@ -45,6 +54,7 @@ export default {
   },
   mounted () {
     event.on('nodeClick', this.handleNodeClick)
+    event.on('nodeAction', this.handleNodeAction)
   }
 }
 </script>

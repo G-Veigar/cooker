@@ -16,6 +16,7 @@ import coEditor from '@/core/desinger/editor/index.vue'
 import coPreviewer from '@/core/desinger/previewer/index.vue'
 import dragImg from '@/components/drag-img/index.vue'
 import schema from '@/core/schema'
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -23,6 +24,22 @@ export default {
     coEditor,
     coPreviewer,
     dragImg
+  },
+  computed: {
+    ...mapState({
+      schemaNodeTree: state => state.schema.nodeTree
+    })
+  },
+  watch: {
+    schemaNodeTree: {
+      handler () {
+        this.$refs.previewer.emit({
+          type: 'schema',
+          data: this.schemaNodeTree
+        })
+      },
+      deep: true
+    }
   },
   methods: {
     handleCurrentElChange (data) {
@@ -37,17 +54,13 @@ export default {
     }
   },
   mounted () {
+    // 优化第一次传递schema.nodeTree逻辑，预览器透出ready事件
     setInterval(() => {
-      // console.log('nodeTree', schema.nodeTree)
       this.$refs.previewer.emit({
         type: 'schema',
         data: schema.nodeTree
       })
     }, 2000)
-
-    // setTimeout(() => {
-    //   schema.appendChild('div')
-    // }, 2000)
   }
 }
 </script>

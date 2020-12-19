@@ -78,6 +78,7 @@ export default {
   }
   .el-collapse-item__content {
     padding: 0;
+    overflow: visible;
   }
   .item-wrapper {
     padding: 8px 4px;

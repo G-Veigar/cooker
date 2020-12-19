@@ -85,7 +85,7 @@ export default {
 
   .el-collapse-item__content {
     padding: 10px;
-    // display: flex;
+    overflow: visible;
   }
 }
 
