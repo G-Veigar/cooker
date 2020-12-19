@@ -1,0 +1,1 @@
+## 唯一id：将symbol作为node的id，postMessage无法传递

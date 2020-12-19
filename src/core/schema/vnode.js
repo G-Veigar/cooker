@@ -1,9 +1,10 @@
 import { cloneDeep } from 'lodash'
+import uid from '@/utils/uid'
 
 class Vnode {
   constructor (options) {
-    const { tag, text, nodeId, style = null } = options
-    this.nodeId = nodeId
+    const { tag, nodeId, text, style = null } = options
+    this.nodeId = nodeId || uid()
     this.tag = tag
     this.text = text
     this.style = style

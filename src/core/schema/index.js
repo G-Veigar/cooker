@@ -50,8 +50,7 @@ class Schema {
   createNode (options) {
     options = {
       tag: 'p',
-      text: 'hahaha',
-      nodeId: 'node343434'
+      text: 'hahaha'
     }
     const node = new Vnode(options)
     this.currentNode.appendChild(node)
