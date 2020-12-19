@@ -6,7 +6,7 @@
       @currentElChange="handleCurrentElChange"
       @dropedNode="handleDropedNode"></co-previewer>
     <co-editor></co-editor>
-    <drag-img></drag-img>
+    <!-- <drag-img></drag-img> -->
   </div>
 </template>
 
@@ -14,7 +14,7 @@
 import coToolbar from '@/core/desinger/toolbar/index.vue'
 import coEditor from '@/core/desinger/editor/index.vue'
 import coPreviewer from '@/core/desinger/previewer/index.vue'
-import dragImg from '@/components/drag-img/index.vue'
+// import dragImg from '@/components/drag-img/index.vue'
 import schema from '@/core/schema'
 import { mapState } from 'vuex'
 
@@ -22,8 +22,8 @@ export default {
   components: {
     coToolbar,
     coEditor,
-    coPreviewer,
-    dragImg
+    coPreviewer
+    // dragImg
   },
   computed: {
     ...mapState({

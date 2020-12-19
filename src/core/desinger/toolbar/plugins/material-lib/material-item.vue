@@ -19,17 +19,17 @@ export default {
     },
     name: {
       type: String
-    },
-    dragImg: {
-      type: [HTMLImageElement, HTMLCanvasElement]
     }
+    // dragImg: {
+    //   type: [HTMLImageElement, HTMLCanvasElement]
+    // }
   },
   methods: {
     handleDragstart (e) {
       const data = { name: this.name }
       const dataStr = JSON.stringify(data)
       e.dataTransfer.setData('label', dataStr)
-      e.dataTransfer.setDragImage(this.dragImg, 0, 0)
+      // e.dataTransfer.setDragImage(this.dragImg, 0, 0)
     }
   }
 }
