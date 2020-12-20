@@ -27,7 +27,8 @@ export default {
   },
   computed: {
     ...mapState({
-      schemaNodeTree: state => state.schema.nodeTree
+      schemaNodeTree: state => state.schema.nodeTree,
+      currentNodeId: state => state.schema.currentNodeId
     })
   },
   watch: {
@@ -39,6 +40,14 @@ export default {
         })
       },
       deep: true
+    },
+    currentNodeId (nodeId) {
+      this.$refs.previewer.emit({
+        type: 'currentNodeChange',
+        data: {
+          nodeId
+        }
+      })
     }
   },
   methods: {

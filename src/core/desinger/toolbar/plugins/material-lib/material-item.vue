@@ -19,6 +19,9 @@ export default {
     },
     name: {
       type: String
+    },
+    tag: {
+      type: String
     }
     // dragImg: {
     //   type: [HTMLImageElement, HTMLCanvasElement]
@@ -26,9 +29,12 @@ export default {
   },
   methods: {
     handleDragstart (e) {
-      const data = { name: this.name }
+      const data = {
+        name: this.name,
+        tag: this.tag
+      }
       const dataStr = JSON.stringify(data)
-      e.dataTransfer.setData('label', dataStr)
+      e.dataTransfer.setData('materialData', dataStr)
       // e.dataTransfer.setDragImage(this.dragImg, 0, 0)
     }
   }

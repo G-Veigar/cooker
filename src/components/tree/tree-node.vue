@@ -117,7 +117,7 @@ export default {
     handleDragstart (label, e) {
       const data = { label }
       const dataStr = JSON.stringify(data)
-      e.dataTransfer.setData('label', dataStr)
+      e.dataTransfer.setData('materialData', dataStr)
     },
     handleDragover: throttle(e => {
       const data = {
@@ -139,7 +139,7 @@ export default {
       console.log(data)
     }, 200),
     handleDrop (e) {
-      const data = e.dataTransfer.getData('label')
+      const data = e.dataTransfer.getData('materialData')
       console.log('handleDrop', data)
     },
     toggleActive (id) {

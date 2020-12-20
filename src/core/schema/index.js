@@ -52,13 +52,12 @@ class Schema {
   }
 
   createNode (options) {
-    options = {
-      tag: 'p',
-      text: 'hahaha'
-    }
-    const node = new Vnode(options)
+    const node = new Vnode({
+      tag: options.tag,
+      text: options.name
+    })
     this.currentNode.appendChild(node)
-    // return node
+    return node
   }
 
   removeNode (node) {

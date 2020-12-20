@@ -19,6 +19,7 @@
               class="mt-item"
               :dragImg="dragImgMap[component.name]"
               :key="component.name"
+              :tag="component.tag"
               :name="component.name"
               :icon="component.icon"></material-item>
           </div>

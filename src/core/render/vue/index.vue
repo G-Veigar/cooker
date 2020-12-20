@@ -18,11 +18,22 @@ export default {
     editMode: { // 编辑模式
       type: Boolean,
       default: false
+    },
+    currentNodeId: {
+      type: String
     }
   },
   computed: {
     schemaData () {
       return this.schema
+    }
+  },
+  watch: {
+    currentNodeId (nodeId) {
+      const el = document.getElementById(nodeId)
+      this.activeEl && (this.activeEl.style.outline = '')
+      el.style.outline = '1px solid #1861d5'
+      this.activeEl = el
     }
   },
   methods: {
@@ -32,8 +43,8 @@ export default {
     },
     handleDrop (e) {
       e.preventDefault()
-      const label = e.dataTransfer.getData('label')
-      const data = JSON.parse(label)
+      const materialData = e.dataTransfer.getData('materialData')
+      const data = JSON.parse(materialData)
       console.log('handleDrop', data)
       window.parent.postMessage({
         type: 'dropedNode',
@@ -45,9 +56,6 @@ export default {
       document.querySelector(el).addEventListener('click', (e) => {
         const activeEl = e.target
         if (activeEl !== this.activeEl || !this.activeEl) {
-          this.activeEl && (this.activeEl.style.outline = '')
-          activeEl.style.outline = '1px solid #1861d5'
-          this.activeEl = activeEl
           window.parent.postMessage({
             type: 'currentElChange',
             data: {

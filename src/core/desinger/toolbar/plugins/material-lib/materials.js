@@ -5,27 +5,27 @@ const materialList = [
     components: [
       {
         name: '容器',
-        component: 'div',
+        tag: 'div',
         icon: 'icon-integral'
       },
       {
         name: '文本',
-        component: 'p',
+        tag: 'p',
         icon: 'icon-text1'
       },
       {
         name: '链接',
-        component: 'a',
+        tag: 'a',
         icon: 'icon-attachent'
       },
       {
         name: '图片',
-        component: 'img',
+        tag: 'img',
         icon: 'icon-pic'
       },
       {
         name: '按钮',
-        component: 'img',
+        tag: 'img',
         icon: 'icon-anniu'
       }
     ]
@@ -35,7 +35,7 @@ const materialList = [
     components: [
       {
         name: '容器2',
-        component: 'div2',
+        tag: 'div2',
         icon: 'icon-integral'
       }
     ]
@@ -46,7 +46,7 @@ const materialIconMap = {}
 
 materialList.forEach(materialGroup => {
   materialGroup.components.forEach(component => {
-    materialIconMap[component.component] = {
+    materialIconMap[component.tag] = {
       icon: component.icon,
       name: component.name
     }

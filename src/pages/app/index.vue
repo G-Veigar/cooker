@@ -2,6 +2,7 @@
   <!-- TOOD: dragover回调只在编辑模式添加 -->
   <cooker-render
     :schema="schema"
+    :currentNodeId="currentNodeId"
     :editMode="editMode"></cooker-render>
 </template>
 
@@ -15,7 +16,8 @@ export default {
   data () {
     return {
       editMode,
-      schema: null
+      schema: null,
+      currentNodeId: ''
     }
   },
   mounted () {
@@ -24,6 +26,10 @@ export default {
       const { type, data } = e.data
       if (type === 'schema') {
         this.schema = data
+      }
+      if (type === 'currentNodeChange') {
+        console.log('currentNodeChange', data)
+        this.currentNodeId = data.nodeId
       }
     }, false)
   }
