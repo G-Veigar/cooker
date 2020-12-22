@@ -6,30 +6,33 @@ class Undo {
   }
 
   add ({ redo, undo, reversible = false }) {
+    const undoThis = this
     let result
     this.operationMap.set(redo, undo)
-    const doFun = (...params) => {
-      const res = redo(...params)
+    const doFun = function (...params) {
+      const res = redo.call(this, ...params)
       const opRecord = new OperationRecord({
         operation: redo,
-        params: params
+        params: params,
+        scope: this
       })
-      this.operationList.push(opRecord)
-      this.index++
+      undoThis.operationList.push(opRecord)
+      undoThis.index++
       return res
     }
     result = doFun
     // 如果是可逆的
     if (reversible) {
       this.operationMap.set(undo, redo)
-      const undoFun = (...params) => {
-        const res = undo(...params)
+      const undoFun = function (...params) {
+        const res = undo.call(this, ...params)
         const opRecord = new OperationRecord({
           operation: undo,
-          params: params
+          params: params,
+          scope: this
         })
-        this.operationList.push(opRecord)
-        this.index++
+        undoThis.operationList.push(opRecord)
+        undoThis.index++
         return res
       }
       result = {
@@ -47,7 +50,8 @@ class Undo {
       const operationRecord = this.operationList[this.index]
       const operation = operationRecord.operation
       const params = operationRecord.params
-      operation(...params)
+      const scope = operationRecord.scope
+      operation.call(scope, ...params)
     }
   }
 
@@ -56,8 +60,9 @@ class Undo {
       const operationRecord = this.operationList[this.index]
       const operation = operationRecord.operation
       const params = operationRecord.params
+      const scope = operationRecord.scope
       const undoOprtation = this.operationMap.get(operation)
-      undoOprtation(...params)
+      undoOprtation.call(scope, ...params)
       this.index--
     }
   }
@@ -67,6 +72,7 @@ class OperationRecord {
   constructor (params) {
     this.operation = params.operation
     this.params = params.params
+    this.scope = params.scope
   }
 }
 

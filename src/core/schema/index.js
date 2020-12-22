@@ -2,12 +2,11 @@ import store from '@/store'
 import Vnode from './vnode'
 import Vue from 'vue'
 import Undo from '@/utils/undo'
+
 class Schema {
   constructor (schemaData) {
     // 初始化nodeTree
     this._initNodeTree(schemaData)
-    // 初始化undo/redo工具
-    this._initUndoHelper()
     this.setCurrentNode(this.nodeTree)
   }
 
@@ -47,9 +46,17 @@ class Schema {
     }
   }
 
-  // 初始化undo工具
-  _initUndoHelper () {
-    this._undoHelper = new Undo()
+  _appendNode (fatherNode, childNode) {
+    console.log('_appendNode', fatherNode)
+    fatherNode = this._getNode(fatherNode)
+    childNode = this._getNode(childNode)
+    fatherNode.appendChild(childNode)
+  }
+
+  _removeNode (fatherNode, childNode) {
+    fatherNode = this._getNode(fatherNode)
+    childNode = this._getNode(childNode)
+    fatherNode.removeChild(childNode)
   }
 
   // 设置当前节点
@@ -68,10 +75,15 @@ class Schema {
     return node
   }
 
-  // 删除节点，不传node参数，默认为currentNode
-  removeNode (node) {
-    node = node ? this._getNode(node) : this.currentNode
-    node.parent.removeChild(node)
+  // 在当前节点后面追加节点
+  appendToCurrentNode (node) {
+    this.appendNode(this.currentNode, node)
+  }
+
+  // 删除当前节点
+  removeCurrentNode () {
+    const fatherNode = this.currentNode.parent
+    this.removeNode(fatherNode, this.currentNode)
   }
 
   // 设置节点样式
@@ -88,16 +100,24 @@ class Schema {
       })
     }
   }
+}
 
-  // appendChild (child, parentNode) {
-  //   parentNode = parentNode || this.currentNode
-  //   const childNode = new Vnode(child)
-  //   if (!parentNode.children) {
-  //     parentNode.children = []
-  //   }
-  //   parentNode.children.push(childNode)
-  //   this.emit('schemaChanged', this)
-  // }
+initUndoMethods()
+
+function initUndoMethods () {
+  // 初始化undoHelper
+  const undoHelper = new Undo()
+  Schema.prototype.undoHelper = undoHelper
+
+  // 原型增加appendNode与removeNode可逆的undo操作
+  const { _appendNode, _removeNode } = Schema.prototype
+  const appendRemoveHelper = undoHelper.add({
+    redo: _appendNode,
+    undo: _removeNode,
+    reversible: true
+  })
+  Schema.prototype.appendNode = appendRemoveHelper.redo
+  Schema.prototype.removeNode = appendRemoveHelper.undo
 }
 
 const schema = new Schema({
