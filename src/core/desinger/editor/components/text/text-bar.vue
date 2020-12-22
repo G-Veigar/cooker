@@ -70,11 +70,15 @@ export default {
   methods: {
     handleSizeInput (val) {
       this.fontSize = val
-      this.node.style.fontSize = val + 'px'
+      this.$emit('input', {
+        fontSize: val + 'px'
+      })
     },
     handleColorInput (val) {
       this.color = val
-      this.node.style.color = val
+      this.$emit('input', {
+        color: val
+      })
     },
     initStyle (style) {
       if (!style) return
@@ -108,16 +112,24 @@ export default {
     },
     handleBold () {
       if (this.bold) {
-        this.node.style.fontWeight = 'bold'
+        this.$emit('input', {
+          fontWeight: 'bold'
+        })
       } else {
-        delete this.node.style.fontWeight
+        this.$emit('input', {
+          fontWeight: ''
+        })
       }
     },
     handleItalic () {
       if (this.italic) {
-        this.node.style.fontStyle = 'italic'
+        this.$emit('input', {
+          fontStyle: 'italic'
+        })
       } else {
-        delete this.node.style.fontStyle
+        this.$emit('input', {
+          fontStyle: ''
+        })
       }
     },
     computeTextDecoration () {
@@ -129,9 +141,13 @@ export default {
         if (this.through) {
           arr.push('line-through')
         }
-        this.node.style.textDecoration = arr.join(' ')
+        this.$emit('input', {
+          textDecoration: arr.join(' ')
+        })
       } else {
-        delete this.node.style.textDecoration
+        this.$emit('input', {
+          textDecoration: ''
+        })
       }
     }
   }

@@ -55,8 +55,7 @@ export default {
       schema.setCurrentNode(data.nodeId)
     },
     handleDropedNode (e) {
-      const newNode = schema.createNode(e)
-      console.log('newNode', newNode, e)
+      schema.createNode(e).appendToCurrentNode()
     },
     handleKeyup (e) {
       console.log('handleKeypress', e)

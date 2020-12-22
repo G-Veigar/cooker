@@ -9,22 +9,26 @@
 <template>
   <div class="editor">
     <el-tabs type="card">
-      <el-tab-pane label="样式属性" name="first">
+      <el-tab-pane label="样式" name="style">
         <el-collapse v-model="activeNames" @change="handleChange">
-          <el-collapse-item title="盒模型" name="1">
+          <el-collapse-item title="盒模型" name="盒模型">
             <div class="box-model-wrapper">
               <box-model :node.sync="currentNode"></box-model>
             </div>
           </el-collapse-item>
-          <el-collapse-item title="文本" name="2">
-            <text-bar :node.sync="currentNode"></text-bar>
+          <el-collapse-item title="文本" name="文本">
+            <text-bar :node="currentNode" @input="handleInput"></text-bar>
           </el-collapse-item>
-          <el-collapse-item title="背景" name="3">
+          <el-collapse-item title="定位" name="定位">
+            <position-setter :node.sync="currentNode"></position-setter>
+          </el-collapse-item>
+          <el-collapse-item title="背景" name="背景">
             <background-setter :node.sync="currentNode"></background-setter>
           </el-collapse-item>
         </el-collapse>
       </el-tab-pane>
-      <el-tab-pane label="事件" name="second">事件</el-tab-pane>
+      <el-tab-pane label="属性" name="attr">属性</el-tab-pane>
+      <el-tab-pane label="事件" name="event">事件</el-tab-pane>
       <!-- <el-tab-pane label="代码" name="second">代码</el-tab-pane> -->
     </el-tabs>
   </div>
@@ -34,23 +38,36 @@
 import textBar from './components/text/text-bar.vue'
 import boxModel from './components/box-model/index.vue'
 import backgroundSetter from './components/background-setter/index.vue'
+import positionSetter from './components/position-setter/index.vue'
 import schema from '@/core/schema'
+import { mapState } from 'vuex'
 
 export default {
   components: {
     textBar,
     boxModel,
-    backgroundSetter
+    backgroundSetter,
+    positionSetter
   },
   data () {
     return {
-      activeNames: ['1'],
-      currentNode: schema.currentNode
+      activeNames: ['盒模型', '文本', '定位']
     }
+  },
+  computed: {
+    ...mapState({
+      currentNode: state => state.schema.currentNode
+    })
   },
   methods: {
     handleChange (val) {
       console.log(val)
+    },
+    // 处理样式设置
+    handleInput (val) {
+      schema.setNodeStyle({
+        ...val
+      })
     }
   },
   mounted () {

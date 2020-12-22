@@ -1,10 +1,13 @@
 import store from '@/store'
 import Vnode from './vnode'
-
+import Vue from 'vue'
+import Undo from '@/utils/undo'
 class Schema {
   constructor (schemaData) {
     // 初始化nodeTree
-    this.initNodeTree(schemaData)
+    this._initNodeTree(schemaData)
+    // 初始化undo/redo工具
+    this._initUndoHelper()
     this.setCurrentNode(this.nodeTree)
   }
 
@@ -27,7 +30,6 @@ class Schema {
 
   // 获取node节点 参数node可以使node对象，也可以使nodeId
   _getNode (node) {
-    console.log('_getNode', node, this.nodeMap)
     if (node instanceof Vnode) {
       return node
     } else if (node in this.nodeMap) {
@@ -38,11 +40,16 @@ class Schema {
   }
 
   // 初始化 nodeTree
-  initNodeTree (schemaData) {
+  _initNodeTree (schemaData) {
     if (schemaData) {
       const nodeTree = new Vnode(schemaData)
       store.commit('initSchema', nodeTree)
     }
+  }
+
+  // 初始化undo工具
+  _initUndoHelper () {
+    this._undoHelper = new Undo()
   }
 
   // 设置当前节点
@@ -51,18 +58,35 @@ class Schema {
     store.commit('setCurrentNode', node)
   }
 
+  // 创建节点
   createNode (options) {
     const node = new Vnode({
       tag: options.tag,
       text: options.name
     })
-    this.currentNode.appendChild(node)
+    // this.currentNode.appendChild(node)
     return node
   }
 
+  // 删除节点，不传node参数，默认为currentNode
   removeNode (node) {
-    node = this._getNode(node)
+    node = node ? this._getNode(node) : this.currentNode
     node.parent.removeChild(node)
+  }
+
+  // 设置节点样式
+  setNodeStyle (style, node) {
+    node = node ? this._getNode(node) : this.currentNode
+    if (node.style) {
+      node.style = {
+        ...node.style,
+        ...style
+      }
+    } else {
+      Vue.set(node, 'style', {
+        ...style
+      })
+    }
   }
 
   // appendChild (child, parentNode) {

@@ -45,8 +45,8 @@ export default {
   },
   data () {
     return {
-      width: 120,
-      height: 60,
+      width: 0,
+      height: 0,
       padding: {
         top: 0,
         right: 0,
@@ -92,10 +92,9 @@ export default {
   },
   watch: {
     styleObject (val) {
-      this.node.style = {
-        ...this.node.style,
-        ...val
-      }
+      this.$emit('input', {
+        fontSize: val + 'px'
+      })
     }
   },
   mounted () {
