@@ -5,42 +5,22 @@ class Undo {
     this.index = -1 // 当前的操作位置
   }
 
-  add ({ redo, undo, reversible = false }) {
+  add ({ redo, undo }) {
     const undoThis = this
-    let result
     this.operationMap.set(redo, undo)
     const doFun = function (...params) {
       const res = redo.call(this, ...params)
       const opRecord = new OperationRecord({
         operation: redo,
         params: params,
-        scope: this
+        scope: this,
+        res
       })
       undoThis.operationList.push(opRecord)
       undoThis.index++
       return res
     }
-    result = doFun
-    // 如果是可逆的
-    if (reversible) {
-      this.operationMap.set(undo, redo)
-      const undoFun = function (...params) {
-        const res = undo.call(this, ...params)
-        const opRecord = new OperationRecord({
-          operation: undo,
-          params: params,
-          scope: this
-        })
-        undoThis.operationList.push(opRecord)
-        undoThis.index++
-        return res
-      }
-      result = {
-        redo: doFun,
-        undo: undoFun
-      }
-    }
-    return result
+    return doFun
   }
 
   redo () {
@@ -61,8 +41,12 @@ class Undo {
       const operation = operationRecord.operation
       const params = operationRecord.params
       const scope = operationRecord.scope
+      const res = operationRecord.res
       const undoOprtation = this.operationMap.get(operation)
-      undoOprtation.call(scope, ...params)
+      undoOprtation.call(scope, {
+        params,
+        res
+      })
       this.index--
     }
   }
@@ -73,6 +57,7 @@ class OperationRecord {
     this.operation = params.operation
     this.params = params.params
     this.scope = params.scope
+    this.res = params.res
   }
 }
 

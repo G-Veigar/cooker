@@ -28,15 +28,15 @@ class Vnode {
 
   // 删除子节点，（不会递归子节点的子节点）
   removeChild (node) {
-    const child = this.children
-    for (let i = 0; i < child.length; i++) {
-      const currentChild = child[i]
+    const childs = this.children
+    for (let i = 0; i < childs.length; i++) {
+      const currentChild = childs[i]
       if (node === currentChild) {
-        child.splice(i, 1)
-        return true
+        childs.splice(i, 1)
+        return i
       }
     }
-    return false
+    return -1
   }
 
   // 新增节点到结尾
@@ -47,6 +47,18 @@ class Vnode {
       Vue.set(this, 'children', [node])
     }
     node.parent = this // 父子关系绑定
+  }
+
+  insertBefore (node, index) {
+    let childs = this.children
+    if (!childs) {
+      childs = this.children = []
+      childs.push(node)
+    } else if (index > childs.length) {
+      childs.push(node)
+    } else {
+      childs.splice(index, 0, node)
+    }
   }
 }
 

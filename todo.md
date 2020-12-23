@@ -21,14 +21,14 @@
 * 简易功能（覆盖90%以上使用场景的样式）
 
 ## schema-类DOM操作API
-* 查找节点
-* 创建节点
-* 插入节点
-* 删除节点
-* 移动节点
-* 复制节点
-* 修改节点信息
-* 设置当前节点
+* appendChild()
+* cloneNode()
+* hasChildNodes()
+* insertBefore()
+* removeChild()
+* replaceChild()
+* contains() ?
+* getRootNode() ? 
 
 ## undo/redo
 

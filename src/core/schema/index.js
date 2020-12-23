@@ -47,16 +47,25 @@ class Schema {
   }
 
   _appendNode (fatherNode, childNode) {
-    console.log('_appendNode', fatherNode)
     fatherNode = this._getNode(fatherNode)
     childNode = this._getNode(childNode)
     fatherNode.appendChild(childNode)
   }
 
+  _$undoAppendNode (operationRecord) {
+    const { params: [fatherNode, childNode] } = operationRecord
+    fatherNode.removeChild(childNode)
+  }
+
   _removeNodeFrom (fatherNode, childNode) {
     fatherNode = this._getNode(fatherNode)
     childNode = this._getNode(childNode)
-    fatherNode.removeChild(childNode)
+    return fatherNode.removeChild(childNode) // 返回删除node在父节点的位置
+  }
+
+  _$undoRemoveNodeFrom (operationRecord) {
+    const { params: [fatherNode, childNode], res } = operationRecord
+    fatherNode.insertBefore(childNode, res)
   }
 
   // 设置当前节点
@@ -115,14 +124,17 @@ function initUndoMethods () {
   Schema.prototype.undoHelper = undoHelper
 
   // 原型增加appendNode与removeNode可逆的undo操作
-  const { _appendNode, _removeNodeFrom } = Schema.prototype
-  const appendRemoveHelper = undoHelper.add({
+  const { _appendNode, _$undoAppendNode, _removeNodeFrom, _$undoRemoveNodeFrom } = Schema.prototype
+  const appendNodeHelper = undoHelper.add({
     redo: _appendNode,
-    undo: _removeNodeFrom,
-    reversible: true
+    undo: _$undoAppendNode
   })
-  Schema.prototype.appendNode = appendRemoveHelper.redo
-  Schema.prototype.removeNodeFrom = appendRemoveHelper.undo
+  const removeNodeFromHelper = undoHelper.add({
+    redo: _removeNodeFrom,
+    undo: _$undoRemoveNodeFrom
+  })
+  Schema.prototype.appendNode = appendNodeHelper
+  Schema.prototype.removeNodeFrom = removeNodeFromHelper
 }
 
 const schema = new Schema({
@@ -222,6 +234,10 @@ const schema = new Schema({
 
 window.undo = function () {
   schema.undoHelper.undo()
+}
+
+window.redo = function () {
+  schema.undoHelper.redo()
 }
 
 export default schema
