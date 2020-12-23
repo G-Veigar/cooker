@@ -232,12 +232,4 @@ const schema = new Schema({
   ]
 })
 
-window.undo = function () {
-  schema.undoHelper.undo()
-}
-
-window.redo = function () {
-  schema.undoHelper.redo()
-}
-
 export default schema

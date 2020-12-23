@@ -23,6 +23,10 @@
       </div>
       <!-- 右侧功能 -->
       <div class="right-tools">
+        <div class="undo-btns">
+          <el-button size="mini" @click="undo">撤销</el-button>
+          <el-button size="mini" @click="redo">重做</el-button>
+        </div>
         <div class="qrcode-preview" @contextmenu="handleContextmenu" title="二维码预览"><i class="iconfont icon-QRcode"></i></div>
       </div>
     </div>
@@ -49,7 +53,7 @@
 
 <script>
 import Previewer from './index.js'
-// import schema from '@/core/schema'
+import schema from '@/core/schema'
 import './style/devices.min.css'
 import { mapState } from 'vuex'
 
@@ -66,6 +70,12 @@ export default {
     })
   },
   methods: {
+    undo () {
+      schema.undoHelper.undo()
+    },
+    redo () {
+      schema.undoHelper.redo()
+    },
     handleContextmenu (e) {
       console.log(e)
       e.preventDefault()
@@ -172,6 +182,8 @@ export default {
     }
 
     .right-tools {
+      display: flex;
+      align-items: center;
       position: absolute;
       right: 10px;
       top: 50%;
