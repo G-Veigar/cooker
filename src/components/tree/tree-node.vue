@@ -26,8 +26,9 @@
           <span class="node-label">{{nodeData.name}}</span>
         </div>
         <div class="node-btn-wrapper">
+          <div class="node-btn-item" @click.stop="nodeAction('copy')" title="复制"><i class="iconfont icon-fuzhi"></i></div>
           <div class="node-btn-item" @click.stop="nodeAction('hide')" title="隐藏"><i class="iconfont icon-Notvisible"></i></div>
-          <div class="node-btn-item" @click.stop="nodeAction('show')" title="显示"><i class="iconfont icon-browse"></i></div>
+          <!-- <div class="node-btn-item" @click.stop="nodeAction('show')" title="显示"><i class="iconfont icon-browse"></i></div> -->
           <div class="node-btn-item" @click.stop="nodeAction('delete')" title="删除"><i class="iconfont icon-delete"></i></div>
         </div>
       </div>

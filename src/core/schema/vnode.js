@@ -1,4 +1,3 @@
-import { cloneDeep } from 'lodash'
 import uid from '@/utils/uid'
 import Vue from 'vue'
 
@@ -21,8 +20,18 @@ class Vnode {
     }
   }
 
+  // 获取到子节点的index位置
+  getChildIndex (childNode) {
+    if (this.children) {
+      return this.children.indexOf(childNode)
+    }
+  }
+
   cloneNode () {
-    const newNode = cloneDeep(this)
+    const tag = this.tag
+    const text = this.text
+    const style = this.style
+    const newNode = new Vnode({ tag, text, style })
     return newNode
   }
 
@@ -59,12 +68,12 @@ class Vnode {
     } else {
       childs.splice(index, 0, node)
     }
+    node.parent = this
   }
-}
 
-Vnode.cloneNode = function (node) {
-  const newNode = cloneDeep(node)
-  return newNode
+  insertAfter (node, index) {
+    this.insertBefore(node, ++index)
+  }
 }
 
 export default Vnode

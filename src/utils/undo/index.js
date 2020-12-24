@@ -16,8 +16,11 @@ class Undo {
         scope: this,
         res
       })
+      // 当后面有执行记录，又执行了新操作，丢弃后面的执行记录
+      if (++undoThis.index < undoThis.operationList.length) {
+        undoThis.operationList.length = ++undoThis.index
+      }
       undoThis.operationList.push(opRecord)
-      undoThis.index++
       return res
     }
     return doFun

@@ -35,10 +35,16 @@ export default {
     handleNodeDelete (nodeId) {
       schema.removeNode(nodeId)
     },
+    handleNodeCopy (nodeId) {
+      const thisNode = schema.getNodeById(nodeId)
+      const thisCloneNode = thisNode.cloneNode()
+      schema.insertAfter(thisNode, thisCloneNode)
+    },
     handleNodeAction (data) {
       const { action, nodeId } = data
       switch (action) {
         case 'delete': this.handleNodeDelete(nodeId); break
+        case 'copy': this.handleNodeCopy(nodeId); break
       }
     },
     treeTransverter (node) {
