@@ -28,10 +28,9 @@ class Vnode {
   }
 
   cloneNode () {
-    const tag = this.tag
-    const text = this.text
-    const style = this.style
-    const newNode = new Vnode({ tag, text, style })
+    const newNode = new Vnode(this)
+    newNode.nodeId = uid()
+    newNode.parent = null
     return newNode
   }
 
