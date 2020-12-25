@@ -6,22 +6,16 @@
     <div class="help-btn">
       <i class="iconfont icon-help"></i>
     </div>
-    <i class="iconfont material-icon" :class="icon"></i>
-    <div class="material-name">{{name}}</div>
+    <i class="iconfont material-icon" :class="material.icon"></i>
+    <div class="material-name">{{material.name}}</div>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    icon: { // iconfont
-      type: String
-    },
-    name: {
-      type: String
-    },
-    tag: {
-      type: String
+    material: {
+      type: Object
     }
     // dragImg: {
     //   type: [HTMLImageElement, HTMLCanvasElement]
@@ -29,11 +23,11 @@ export default {
   },
   methods: {
     handleDragstart (e) {
-      const data = {
-        name: this.name,
-        tag: this.tag
-      }
-      const dataStr = JSON.stringify(data)
+      // const data = {
+      //   name: this.material.name,
+      //   tag: this.material.tag
+      // }
+      const dataStr = JSON.stringify(this.material)
       e.dataTransfer.setData('materialData', dataStr)
       // e.dataTransfer.setDragImage(this.dragImg, 0, 0)
     }

@@ -25,8 +25,19 @@ const materialList = [
       },
       {
         name: '按钮',
-        tag: 'img',
-        icon: 'icon-anniu'
+        tag: 'button',
+        icon: 'icon-anniu',
+        props: [
+          {
+            name: '按钮文案',
+            type: 'text',
+            suggest: ['取消', '我知道了', '确认', '点击领取'], // 根据用户使用习惯推荐
+            default: '确定',
+            rules: {
+              required: true
+            }
+          }
+        ]
       }
     ]
   },

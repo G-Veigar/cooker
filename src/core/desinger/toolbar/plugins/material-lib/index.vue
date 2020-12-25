@@ -16,12 +16,10 @@
           <div class="item-wrapper">
             <material-item
               v-for="component in item.components"
+              :material="component"
               class="mt-item"
               :dragImg="dragImgMap[component.name]"
-              :key="component.name"
-              :tag="component.tag"
-              :name="component.name"
-              :icon="component.icon"></material-item>
+              :key="component.name"></material-item>
           </div>
         </el-collapse-item>
       </el-collapse>
