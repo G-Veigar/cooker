@@ -30,7 +30,7 @@
 <script>
 import materialItem from './material-item'
 import event from '@/utils/event'
-import { materialList } from './materials'
+import { materialList } from '@/core/material'
 
 export default {
   components: { materialItem },

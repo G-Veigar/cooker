@@ -12,7 +12,7 @@
 import treeNode from '@/components/tree/tree-node'
 import schema from '@/core/schema'
 import { mapState } from 'vuex'
-import { materialIconMap } from '../material-lib/materials.js'
+import { materialIconMap } from '@/core/material'
 import event from '@/utils/event'
 
 export default {

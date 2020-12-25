@@ -53,7 +53,10 @@ const materialList = [
   }
 ]
 
+// 物料icon映射map
 const materialIconMap = {}
+// 物料props映射map
+const materialPropsMap = {}
 
 materialList.forEach(materialGroup => {
   materialGroup.components.forEach(component => {
@@ -61,10 +64,12 @@ materialList.forEach(materialGroup => {
       icon: component.icon,
       name: component.name
     }
+    materialPropsMap[component.tag] = component.props
   })
 })
 
 export {
   materialList,
-  materialIconMap
+  materialIconMap,
+  materialPropsMap
 }
