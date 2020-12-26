@@ -1,9 +1,14 @@
 <template>
-  <div class="prop-setter">属性设置器:
-    <prop-inputer
-      v-for="(prop, index) in materialProps"
-      :prop="prop"
-      :key="index"></prop-inputer>
+  <div class="prop-setter">
+    <el-form label-width="80px" :model="formLabelAlign">
+      <el-form-item
+        v-for="(prop, index) in materialProps"
+        :key="index"
+        :label="prop.name">
+        <prop-inputer
+          :prop="prop"></prop-inputer>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
@@ -16,6 +21,11 @@ import propInputer from './prop-inputer'
 export default {
   components: {
     propInputer
+  },
+  data () {
+    return {
+      formLabelAlign: {}
+    }
   },
   computed: {
     ...mapState({

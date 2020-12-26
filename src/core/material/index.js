@@ -31,6 +31,7 @@ const materialList = [
           {
             name: '按钮文案',
             type: 'text',
+            propName: 'text',
             suggest: ['取消', '我知道了', '确认', '点击领取'], // 根据用户使用习惯推荐
             default: '确定',
             rules: {

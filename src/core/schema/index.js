@@ -132,6 +132,21 @@ class Schema {
       })
     }
   }
+
+  // 设置节点属性
+  setNodeProp (props, node) {
+    node = node ? this._getNode(node) : this.currentNode
+    if (node.props) {
+      node.props = {
+        ...node.props,
+        ...props
+      }
+    } else {
+      Vue.set(node, 'props', {
+        ...props
+      })
+    }
+  }
 }
 
 initUndoMethods()
