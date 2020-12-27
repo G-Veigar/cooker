@@ -21,7 +21,27 @@ const debounce = (fun, time) => {
   }
 }
 
+// 设置值
+const setValByPath = (obj, path, val) => {
+  const pathArr = path.split('.')
+  const lastKey = pathArr[pathArr.length - 1]
+  for (let i = 0; i < pathArr.length - 1; i++) {
+    obj = obj[pathArr[i]] || {}
+  }
+  obj[lastKey] = val
+}
+
+const getValByPath = (obj, path) => {
+  const pathArr = path.split('.')
+  for (let i = 0; i < pathArr.length; i++) {
+    obj = obj[pathArr[i]]
+  }
+  return obj
+}
+
 export {
   throttle,
-  debounce
+  debounce,
+  setValByPath,
+  getValByPath
 }

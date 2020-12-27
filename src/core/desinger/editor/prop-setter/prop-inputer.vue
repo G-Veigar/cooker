@@ -9,6 +9,7 @@
 import { Input } from 'element-ui'
 import { mapState } from 'vuex'
 import schema from '@/core/schema'
+import { getValByPath, setValByPath } from '@/utils'
 
 const componentMap = {
   text: Input
@@ -25,7 +26,7 @@ export default {
       currentNode: state => state.schema.currentNode
     }),
     value () {
-      return this.currentNode.props?.[this.prop.propName]
+      return getValByPath(this.currentNode, this.prop.propName)
     },
     inputComponent () {
       return componentMap[this.prop.type]
@@ -33,10 +34,10 @@ export default {
   },
   methods: {
     handleInput (e) {
-      schema.setNodeProp({
-        [this.prop.propName]: e
-      })
-      console.log('handleInput', e)
+      const newData = {}
+      setValByPath(newData, this.prop.propName, e)
+      console.log('newData', newData)
+      schema.setNodeProp(newData)
     }
   }
 }

@@ -11,7 +11,17 @@ const materialList = [
       {
         name: '文本',
         tag: 'p',
-        icon: 'icon-text1'
+        icon: 'icon-text1',
+        props: [
+          {
+            name: '文本内容',
+            type: 'text',
+            propName: 'text',
+            rules: {
+              required: true
+            }
+          }
+        ]
       },
       {
         name: '链接',
@@ -21,7 +31,18 @@ const materialList = [
       {
         name: '图片',
         tag: 'img',
-        icon: 'icon-pic'
+        icon: 'icon-pic',
+        props: [
+          {
+            name: '图片链接',
+            type: 'text',
+            propName: 'props.src',
+            default: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2585703979,2276875278&fm=26&gp=0.jpg',
+            rules: {
+              required: true
+            }
+          }
+        ]
       },
       {
         name: '按钮',

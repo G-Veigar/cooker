@@ -68,6 +68,27 @@ class Schema {
     fatherNode.insertBefore(childNode, res)
   }
 
+  // 设置节点属性
+  _setNodeProp (props, node) {
+    node = node ? this._getNode(node) : this.currentNode
+    const changeMap = {}
+    for (const key in props) {
+      const oldVal = node[key]
+      const newVal = props[key]
+      changeMap[key] = oldVal
+      Vue.set(node, key, newVal)
+    }
+    return {
+      changeNode: node,
+      changeMap
+    }
+  }
+
+  _$undoSetNodeProp (operationRecord) {
+    const { res: { changeNode, changeMap } } = operationRecord
+    this._setNodeProp(changeMap, changeNode)
+  }
+
   getNodeById (nodeId) {
     if (nodeId in this.nodeMap) {
       return this.nodeMap[nodeId]
@@ -132,21 +153,6 @@ class Schema {
       })
     }
   }
-
-  // 设置节点属性
-  setNodeProp (props, node) {
-    node = node ? this._getNode(node) : this.currentNode
-    if (node.props) {
-      node.props = {
-        ...node.props,
-        ...props
-      }
-    } else {
-      Vue.set(node, 'props', {
-        ...props
-      })
-    }
-  }
 }
 
 initUndoMethods()
@@ -161,8 +167,10 @@ function initUndoMethods () {
   const {
     _appendNode, _$undoAppendNode,
     _removeNodeFrom, _$undoRemoveNodeFrom,
-    _insertAfter, _$undoInsertAfter
+    _insertAfter, _$undoInsertAfter,
+    _setNodeProp, _$undoSetNodeProp
   } = Schema.prototype
+
   const appendNodeHelper = undoHelper.add({
     redo: _appendNode,
     undo: _$undoAppendNode
@@ -175,9 +183,14 @@ function initUndoMethods () {
     redo: _insertAfter,
     undo: _$undoInsertAfter
   })
+  const setNodePropHelper = undoHelper.add({
+    redo: _setNodeProp,
+    undo: _$undoSetNodeProp
+  })
   Schema.prototype.appendNode = appendNodeHelper
   Schema.prototype.removeNodeFrom = removeNodeFromHelper
   Schema.prototype.insertAfter = insertAfterHelper
+  Schema.prototype.setNodeProp = setNodePropHelper
 }
 
 const schema = new Schema({
@@ -270,6 +283,16 @@ const schema = new Schema({
             body: "alert('hehe')"
           }
         }
+      }
+    },
+    {
+      tag: 'img',
+      nodeId: 'img000',
+      style: {
+        fontWeight: 'bold'
+      },
+      props: {
+        src: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2203133702,1040096964&fm=26&gp=0.jpg'
       }
     }
   ]

@@ -45,7 +45,7 @@ function schema2RenderParmas (schema, createElement, componentMap) {
     }
     // 处理 props
     if (schema.props) {
-      res.attribute.props = schema.props
+      res.attribute.domProps = schema.props
     }
     // 处理 attrs
     if (schema.attrs) {
