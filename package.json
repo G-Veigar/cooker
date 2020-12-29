@@ -17,6 +17,7 @@
     "lodash": "4.17.20",
     "mitt": "2.1.0",
     "monaco-editor": "0.21.2",
+    "polished": "4.0.5",
     "postcss": "8.1.4",
     "postcss-js": "3.0.1",
     "rxjs": "6.6.3",
