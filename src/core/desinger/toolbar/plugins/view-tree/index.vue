@@ -40,11 +40,24 @@ export default {
       const thisCloneNode = thisNode.cloneNode()
       schema.insertAfter(thisNode, thisCloneNode)
     },
+    handleNodeHide (nodeId) {
+      const thisNode = schema.getNodeById(nodeId)
+      schema.setNodeProp({
+        style: {
+          display: 'none'
+        }
+      }, thisNode)
+    },
+    handleNodeShow (nodeId) {
+      schema.undoHelper.undo()
+    },
     handleNodeAction (data) {
       const { action, nodeId } = data
       switch (action) {
         case 'delete': this.handleNodeDelete(nodeId); break
         case 'copy': this.handleNodeCopy(nodeId); break
+        case 'hide': this.handleNodeHide(nodeId); break
+        case 'show': this.handleNodeShow(nodeId); break
       }
     },
     treeTransverter (node) {

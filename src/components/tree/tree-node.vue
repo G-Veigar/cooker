@@ -17,7 +17,7 @@
       </div>
       <div
         class="node-main"
-        :class="{active: this.activeId === nodeData.id}"
+        :class="{active: this.activeId === nodeData.id, hidden: !isShow}"
         draggable
         @dragstart="handleDragstart(nodeData.name, $event)"
         @click="toggleActive(nodeData.id)">
@@ -27,8 +27,8 @@
         </div>
         <div class="node-btn-wrapper">
           <div class="node-btn-item" @click.stop="nodeAction('copy')" title="复制"><i class="iconfont icon-fuzhi"></i></div>
-          <div class="node-btn-item" @click.stop="nodeAction('hide')" title="隐藏"><i class="iconfont icon-Notvisible"></i></div>
-          <!-- <div class="node-btn-item" @click.stop="nodeAction('show')" title="显示"><i class="iconfont icon-browse"></i></div> -->
+          <div class="node-btn-item" v-if="isShow" @click.stop="nodeAction('hide')" title="隐藏"><i class="iconfont icon-Notvisible"></i></div>
+          <div class="node-btn-item" v-else @click.stop="nodeAction('show')" title="显示"><i class="iconfont icon-browse"></i></div>
           <div class="node-btn-item" @click.stop="nodeAction('delete')" title="删除"><i class="iconfont icon-delete"></i></div>
         </div>
       </div>
@@ -91,6 +91,13 @@ export default {
     }
   },
   computed: {
+    isShow () {
+      if (this.node?.style?.display !== 'none') {
+        return true
+      } else {
+        return false
+      }
+    },
     nodeData () {
       if (this.name && this.icon && this.id) {
         return {
@@ -173,6 +180,9 @@ $childNodeWrapper-paddingLeft: $indentLinner-width + $foldBtn-width / 2;
   &.active {
     background-color: #bedcfa;
     background-origin: padding-box;
+  }
+  &.hidden {
+    color: #999;
   }
   &:hover {
     .node-btn-wrapper {
