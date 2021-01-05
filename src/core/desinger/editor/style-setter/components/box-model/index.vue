@@ -3,31 +3,31 @@
     <div class="box margin-box">
       <div class="box-name">margin</div>
       <!-- margin top right bottom left -->
-      <input class="box-item-val box-item-top margin-top" type="number" v-model.number="margin.top" />
-      <input class="box-item-val box-item-right margin-right" type="number" v-model.number="margin.right" />
-      <input class="box-item-val box-item-bottom margin-bottom" type="number" v-model.number="margin.bottom" />
-      <input class="box-item-val box-item-left margin-left" type="number" v-model.number="margin.left" />
+      <input class="box-item-val box-item-top margin-top" type="number" :value="nodeBoxStyle.margin.top" @input="handleInput('marginTop', $event)"/>
+      <input class="box-item-val box-item-right margin-right" type="number" :value="nodeBoxStyle.margin.right" @input="handleInput('marginRight', $event)"/>
+      <input class="box-item-val box-item-bottom margin-bottom" type="number" :value="nodeBoxStyle.margin.bottom" @input="handleInput('marginBottom', $event)"/>
+      <input class="box-item-val box-item-left margin-left" type="number" :value="nodeBoxStyle.margin.left" @input="handleInput('marginLeft', $event)"/>
 
       <div class="box border-box">
         <div class="box-name">border</div>
         <!-- border top right bottom left -->
-        <input class="box-item-val box-item-top border-top" type="number" v-model.number="border.top">
-        <input class="box-item-val box-item-right border-right" type="number" v-model.number="border.right">
-        <input class="box-item-val box-item-bottom border-bottom" type="number" v-model.number="border.bottom">
-        <input class="box-item-val box-item-left border-left" type="number" v-model.number="border.left">
+        <input class="box-item-val box-item-top border-top" type="number" :value="nodeBoxStyle.border.top" @input="handleInput('borderLeftWidth', $event)">
+        <input class="box-item-val box-item-right border-right" type="number" :value="nodeBoxStyle.border.right" @input="handleInput('borderRightWidth', $event)">
+        <input class="box-item-val box-item-bottom border-bottom" type="number" :value="nodeBoxStyle.border.bottom" @input="handleInput('borderBottomWidth', $event)">
+        <input class="box-item-val box-item-left border-left" type="number" :value="nodeBoxStyle.border.left" @input="handleInput('borderLeftWidth', $event)">
 
         <div class="box padding-box">
           <div class="box-name">padding</div>
           <!-- padding top right bottom left -->
-          <input class="box-item-val box-item-top padding-top" type="number" v-model.number="padding.top">
-          <input class="box-item-val box-item-right padding-right" type="number" v-model.number="padding.right">
-          <input class="box-item-val box-item-bottom padding-bottom" type="number" v-model.number="padding.bottom">
-          <input class="box-item-val box-item-left padding-left" type="number" v-model.number="padding.left">
+          <input class="box-item-val box-item-top padding-top" type="number" :value="nodeBoxStyle.padding.top" @input="handleInput('paddingTop', $event)">
+          <input class="box-item-val box-item-right padding-right" type="number" :value="nodeBoxStyle.padding.right" @input="handleInput('paddingRight', $event)">
+          <input class="box-item-val box-item-bottom padding-bottom" type="number" :value="nodeBoxStyle.padding.bottom" @input="handleInput('paddingBottom', $event)">
+          <input class="box-item-val box-item-left padding-left" type="number" :value="nodeBoxStyle.padding.left" @input="handleInput('paddingLeft', $event)">
 
           <div class="content-box">
-            <input class="content-width" type="number" v-model.number="width" />
+            <input class="content-width" type="number" :value="nodeBoxStyle.width" @input="handleInput('width', $event)"/>
             <div class="content-divider">×</div>
-            <input class="content-height" type="number" v-model.number="height" />
+            <input class="content-height" type="number" :value="nodeBoxStyle.height" @input="handleInput('height', $event)"/>
           </div>
         </div>
       </div>
@@ -40,65 +40,56 @@ export default {
   props: {
     node: {
       type: Object,
-      require: true
+      require: true,
+      default () {
+        return {
+          style: {}
+        }
+      }
     }
   },
   data () {
     return {
-      width: 0,
-      height: 0,
-      padding: {
-        top: 0,
-        right: 0,
-        bottom: 0,
-        left: 0
-      },
-      border: {
-        top: 0,
-        right: 0,
-        bottom: 0,
-        left: 0
-      },
-      margin: {
-        top: 0,
-        right: 0,
-        bottom: 0,
-        left: 0
-      }
     }
   },
   computed: {
-    styleObject () {
-      const res = {
-        width: this.width,
-        height: this.height,
-        paddingTop: this.padding.top,
-        paddingRight: this.padding.right,
-        paddingBottom: this.padding.bottom,
-        paddingLeft: this.padding.left,
-        borderTopWidth: this.border.top,
-        borderRightWidth: this.border.right,
-        borderBottomWidth: this.border.bottom,
-        borderLeftWidth: this.border.left,
-        marginTop: this.margin.top,
-        marginRight: this.margin.right,
-        marginBottom: this.margin.bottom,
-        marginLeft: this.margin.left
+    nodeBoxStyle () {
+      const {
+        width, height,
+        paddingTop, paddingRight, paddingBottom, paddingLeft,
+        marginTop, marginRight, marginBottom, marginLeft,
+        borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth
+      } = this.node.style
+      return {
+        width: parseInt(width) || 0,
+        height: parseInt(height) || 0,
+        padding: {
+          top: parseInt(paddingTop) || 0,
+          right: parseInt(paddingRight) || 0,
+          bottom: parseInt(paddingBottom) || 0,
+          left: parseInt(paddingLeft) || 0
+        },
+        border: {
+          top: parseInt(borderTopWidth) || 0,
+          right: parseInt(borderRightWidth) || 0,
+          bottom: parseInt(borderBottomWidth) || 0,
+          left: parseInt(borderLeftWidth) || 0
+        },
+        margin: {
+          top: parseInt(marginTop) || 0,
+          right: parseInt(marginRight) || 0,
+          bottom: parseInt(marginBottom) || 0,
+          left: parseInt(marginLeft) || 0
+        }
       }
-      return res
     }
   },
   methods: {
-  },
-  watch: {
-    styleObject (val) {
+    handleInput (styleProp, e) {
       this.$emit('input', {
-        fontSize: val + 'px'
+        [styleProp]: `${e.target.value}px`
       })
     }
-  },
-  mounted () {
-    // console.log('styleObject', this.styleObject)
   }
 }
 </script>

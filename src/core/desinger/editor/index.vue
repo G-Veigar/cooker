@@ -18,6 +18,9 @@
       <el-tab-pane label="事件" name="event">
         <event-setter></event-setter>
       </el-tab-pane>
+      <el-tab-pane label="数据" name="data">
+        <event-setter></event-setter>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>

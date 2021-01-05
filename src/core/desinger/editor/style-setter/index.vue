@@ -3,7 +3,7 @@
     <el-collapse v-model="activeNames" @change="handleChange">
       <el-collapse-item title="盒模型" name="盒模型">
         <div class="box-model-wrapper">
-          <box-model :node.sync="currentNode"></box-model>
+          <box-model :node="currentNode" @input="handleInput"></box-model>
         </div>
       </el-collapse-item>
       <el-collapse-item title="文本" name="文本">
