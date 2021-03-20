@@ -11,7 +11,7 @@
       <div class="box border-box">
         <div class="box-name">border</div>
         <!-- border top right bottom left -->
-        <input class="box-item-val box-item-top border-top" type="number" :value="nodeBoxStyle.border.top" @input="handleInput('borderLeftWidth', $event)">
+        <input class="box-item-val box-item-top border-top" type="number" :value="nodeBoxStyle.border.top" @input="handleInput('borderTopWidth', $event)">
         <input class="box-item-val box-item-right border-right" type="number" :value="nodeBoxStyle.border.right" @input="handleInput('borderRightWidth', $event)">
         <input class="box-item-val box-item-bottom border-bottom" type="number" :value="nodeBoxStyle.border.bottom" @input="handleInput('borderBottomWidth', $event)">
         <input class="box-item-val box-item-left border-left" type="number" :value="nodeBoxStyle.border.left" @input="handleInput('borderLeftWidth', $event)">

@@ -1,23 +1,28 @@
 <template>
   <!-- TOOD: dragover回调只在编辑模式添加 -->
-  <cooker-render
-    :schema="schema"
-    :currentNodeId="currentNodeId"
-    :editMode="editMode"></cooker-render>
+  <div>
+    <cooker-render
+      :schema="schema"
+      :currentNodeId="currentNodeId"
+      :editMode="editMode"></cooker-render>
+    <cooker-modal v-model="modalVisible"></cooker-modal>
+  </div>
 </template>
 
 <script>
 import cookerRender from '@/core/render/vue/index.vue'
+import cookerModal from '@/core/material/modal'
 
 const editMode = !(window.location.href.includes('preview'))
 
 export default {
-  components: { cookerRender },
+  components: { cookerRender, cookerModal },
   data () {
     return {
       editMode,
       schema: null,
-      currentNodeId: ''
+      currentNodeId: '',
+      modalVisible: true
     }
   },
   mounted () {

@@ -18,8 +18,8 @@
       <el-tab-pane label="事件" name="event">
         <event-setter></event-setter>
       </el-tab-pane>
-      <el-tab-pane label="数据" name="data">
-        <event-setter></event-setter>
+      <el-tab-pane label="状态" name="data">
+        <status-setter></status-setter>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -29,12 +29,14 @@
 import styleSetter from './style-setter'
 import propSetter from './prop-setter'
 import eventSetter from './event-setter'
+import statusSetter from './status-setter'
 
 export default {
   components: {
     styleSetter,
     propSetter,
-    eventSetter
+    eventSetter,
+    statusSetter
   },
   data () {
     return {
