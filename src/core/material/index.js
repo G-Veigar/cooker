@@ -72,6 +72,16 @@ const materialList = [
         icon: 'icon-integral'
       }
     ]
+  },
+  {
+    title: '自定义组件',
+    components: [
+      {
+        name: '容器2',
+        tag: 'div2',
+        icon: 'icon-integral'
+      }
+    ]
   }
 ]
 

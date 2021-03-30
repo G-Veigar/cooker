@@ -298,6 +298,25 @@ const schema = new Schema({
     }
   ],
   event: {
+    on: {
+      '#btn@click' () {
+        // app
+        //   .hide()
+        //   .show()
+        //   .showToast()
+        //   .showLoading()
+        //   .closeToast()
+        //   .navTo()
+        //   .routerPush()
+        //   .routerReplace()
+        //   .routerBack()
+        //   .requestApi()
+        //   .track()
+      }
+    },
+    emit: {
+
+    }
   },
   state: {
   }

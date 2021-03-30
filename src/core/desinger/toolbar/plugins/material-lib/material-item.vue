@@ -35,7 +35,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .material-item {
   position: relative;
   display: flex;
