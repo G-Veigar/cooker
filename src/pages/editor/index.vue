@@ -64,7 +64,7 @@ export default {
   },
   mounted () {
     // 优化第一次传递schema.nodeTree逻辑，预览器透出ready事件
-    setInterval(() => {
+    setTimeout(() => {
       this.$refs.previewer.emit({
         type: 'schema',
         data: schema.nodeTree

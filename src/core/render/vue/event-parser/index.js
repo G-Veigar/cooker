@@ -22,19 +22,22 @@
 //   }
 // }
 // TODO: nativeOn兼容
-function parseEventHandle (schemaNode) {
+function parseEventHandle ($this, schemaNode) {
   const res = {
     on: {},
     nativeOn: {}
   }
-  const eventHandls = schemaNode.eventHandles
-  for (const event in eventHandls) {
-    const handleSchema = eventHandls[event].handle
-    const { params, body } = handleSchema
-    const funParams = [...params, body]
-    // eslint-disable-next-line no-new-func
-    const handle = new Function(...funParams)
-    res.on[event] = handle
+  const eventEmit = schemaNode.event.emit
+  const eventOn = schemaNode.event.on
+  // 事件触发
+  for (const eventName in eventEmit) {
+    res.on[eventName] = $this._emitEvent.bind($this, eventEmit[eventName])
+  }
+  // 事件监听
+  for (const eventName in eventOn) {
+    $this._onEvent(eventName, () => {
+      console.log('hehe on')
+    })
   }
   return res
 }

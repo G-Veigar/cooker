@@ -3,12 +3,13 @@ import Vue from 'vue'
 
 class Vnode {
   constructor (options) {
-    const { props, parent, tag, nodeId, text, style = null } = options
+    const { props, parent, tag, nodeId, text, style, event } = options
     this.nodeId = nodeId || uid() // 节点id
     this.tag = tag
     this.text = text
     this.style = style
     this.props = props
+    this.event = event
     this.parent = parent || null // 父节点
 
     if (options.children) {

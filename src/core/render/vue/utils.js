@@ -6,7 +6,7 @@ import { parseEventHandle } from './event-parser/index.js'
  * @param {*} createElement
  * @returns vue的createElement函数的三个参数 element，attribute，children
  */
-function schema2RenderParmas (schema, createElement, componentMap) {
+function schema2RenderParmas ($this, schema, createElement, componentMap) {
   if (!schema) {
     return {
       element: 'div',
@@ -51,9 +51,10 @@ function schema2RenderParmas (schema, createElement, componentMap) {
     if (schema.attrs) {
       res.attribute.attrs = schema.attrs
     }
+
     // 处理 eventHandles
-    if (schema.eventHandles) {
-      const handles = parseEventHandle(schema)
+    if (schema.event) {
+      const handles = parseEventHandle($this, schema)
       res.attribute.on = handles.on
     }
     if (schema.text) {
@@ -64,7 +65,7 @@ function schema2RenderParmas (schema, createElement, componentMap) {
     let children = []
     if (schema.children) {
       children = schema.children.map(item => {
-        const { element, attribute, children } = schema2RenderParmas(item, createElement, componentMap)
+        const { element, attribute, children } = schema2RenderParmas($this, item, createElement, componentMap)
         return createElement(element, attribute, children)
       })
     }

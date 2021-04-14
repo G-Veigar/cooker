@@ -141,12 +141,16 @@ export default {
           defaultValue: 'false',
           desc: '是否禁用'
         }
-      ]
+      ],
+      input: ''
     }
   },
   methods: {
     addNewStatus () {
       console.log('addNewStatus')
+    },
+    handleChange (val) {
+      console.log(val)
     }
   }
 }

@@ -75,6 +75,12 @@ export default {
   methods: {
     addNewStatus () {
       console.log('addNewStatus')
+    },
+    addNewListener () {
+      console.log('addNewListener')
+    },
+    handleChange (val) {
+      console.log(val)
     }
   }
 }

@@ -4,6 +4,10 @@
 // import { extractStyle, createStyle } from './style-parser/index3.js'
 // import { parseEventHandle } from './event-parser/index.js'
 import { schema2RenderParmas } from './utils.js'
+import Vue from 'vue'
+import renderMixin from './mixin'
+
+Vue.mixin(renderMixin)
 
 export default {
   data () {
@@ -69,7 +73,7 @@ export default {
   },
   render (h) {
     // eslint-disable-next-line no-unused-vars
-    const { element, attribute, children } = schema2RenderParmas(this.schemaData, h, {})
+    const { element, attribute, children } = schema2RenderParmas(this, this.schemaData, h, {})
 
     return h('div', {
       attrs: {

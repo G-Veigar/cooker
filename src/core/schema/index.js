@@ -260,6 +260,12 @@ const schema = new Schema({
       style: {
         fontWeight: 'bold',
         marginTop: '100px'
+      },
+      event: {
+        on: null,
+        emit: {
+          click: '#mybtn'
+        }
       }
     },
     {
@@ -269,19 +275,22 @@ const schema = new Schema({
       style: {
         color: '#369'
       },
-      eventHandles: {
-        click: {
-          once: false,
-          decorator: [
-            {
-              name: 'debounce',
-              params: [500]
-            }
-          ],
-          // TAG: schema中函数如何表示？
-          handle: {
-            params: [],
-            body: "alert('hehe')"
+      event: {
+        emit: null,
+        on: {
+          '#mybtn': {
+            // app
+            //   .hide()
+            //   .show()
+            //   .showToast()
+            //   .showLoading()
+            //   .closeToast()
+            //   .navTo()
+            //   .routerPush()
+            //   .routerReplace()
+            //   .routerBack()
+            //   .requestApi()
+            //   .track()
           }
         }
       }
@@ -294,30 +303,10 @@ const schema = new Schema({
       },
       props: {
         src: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2203133702,1040096964&fm=26&gp=0.jpg'
-      }
+      },
+      event: null
     }
   ],
-  event: {
-    on: {
-      '#btn@click' () {
-        // app
-        //   .hide()
-        //   .show()
-        //   .showToast()
-        //   .showLoading()
-        //   .closeToast()
-        //   .navTo()
-        //   .routerPush()
-        //   .routerReplace()
-        //   .routerBack()
-        //   .requestApi()
-        //   .track()
-      }
-    },
-    emit: {
-
-    }
-  },
   state: {
   }
 })
