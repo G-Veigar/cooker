@@ -1,17 +1,17 @@
 
 <script>
 // eslint-disable-next-line no-unused-vars
-// import { extractStyle, createStyle } from './style-parser/index3.js'
-// import { parseEventHandle } from './event-parser/index.js'
 import { schema2RenderParmas } from './utils.js'
-import Vue from 'vue'
-import renderMixin from './mixin'
-
-Vue.mixin(renderMixin)
+import event from '@/utils/event'
+import action from './actions'
 
 export default {
   data () {
     return {
+      // TODO：无法使用_开头
+      stateData: {
+        '123Show': true
+      }
     }
   },
   props: {
@@ -41,9 +41,18 @@ export default {
     }
   },
   methods: {
+    _emitEvent: function (eventName) {
+      event.emit(eventName)
+    },
+    _onEvent: function (eventName, cb) {
+      event.on(eventName, cb)
+    },
+    _action (actionType, params) {
+      console.log('this', this)
+      action[actionType].call(this, params)
+    },
     handleDragover (e) {
       e.preventDefault()
-      // console.log('handleDragover', e)
     },
     handleDrop (e) {
       e.preventDefault()

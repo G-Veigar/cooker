@@ -14,6 +14,15 @@ function schema2RenderParmas ($this, schema, createElement, componentMap) {
       children: null
     }
   }
+  // 处理显隐逻辑
+  const nodeShowKey = schema.nodeId + 'Show'
+  if ($this.stateData[nodeShowKey] === false) {
+    return {
+      element: 'div',
+      attribute: null,
+      children: null
+    }
+  }
   let res
   // 处理自定义组件
   if (schema.tag.startsWith('$')) {

@@ -35,9 +35,14 @@ function parseEventHandle ($this, schemaNode) {
   }
   // 事件监听
   for (const eventName in eventOn) {
-    $this._onEvent(eventName, () => {
-      console.log('hehe on')
-    })
+    const actionData = eventOn[eventName]
+    const { type, name, params } = actionData
+    let actionFun
+    if (type === 'base') {
+      // TODO：fix params
+      actionFun = $this._action.bind($this, name, { ...params })
+    }
+    $this._onEvent(eventName, actionFun)
   }
   return res
 }

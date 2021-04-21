@@ -264,7 +264,7 @@ const schema = new Schema({
       event: {
         on: null,
         emit: {
-          click: '#mybtn'
+          click: '#mybtn@click'
         }
       }
     },
@@ -278,8 +278,17 @@ const schema = new Schema({
       event: {
         emit: null,
         on: {
-          '#mybtn': {
+          '#mybtn@click': {
+            type: 'base',
+            name: 'hide',
+            params: {
+              nodeId: '123'
+            }
+            // params: {
+            //   url: 'http://www.baidu.com'
+            // }
             // app
+            //   .setData()
             //   .hide()
             //   .show()
             //   .showToast()

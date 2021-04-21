@@ -1,34 +1,38 @@
 <template>
-  <div class="status-setter">
+  <div class="event-setter">
     <el-collapse v-model="activeNames" @change="handleChange">
       <el-collapse-item title="事件监听" name="事件监听">
         <el-button type="primary" @click="addNewListener">添加监听器</el-button>
         <el-table
-          :data="listeners"
+          :data="onEvents"
           stripe
           style="width: 100%">
           <el-table-column
-            prop="event"
-            label="事件">
+            prop="eventName"
+            label="事件key">
           </el-table-column>
           <el-table-column
-            prop="handler"
+            prop="name"
             label="监听器">
           </el-table-column>
         </el-table>
       </el-collapse-item>
       <el-collapse-item title="事件触发" name="事件触发">
+        <div class="event-select-wrapper">
+          <el-button type="primary" @click="addNewEimtter">添加触发器</el-button>
+          <event-select v-show="eventSelectShow"></event-select>
+        </div>
         <el-table
-          :data="events"
+          :data="emitEvents"
           stripe
           style="width: 100%">
           <el-table-column
-            prop="event"
-            label="事件">
+            prop="eventType"
+            label="事件类型">
           </el-table-column>
           <el-table-column
-            prop="handler"
-            label="监听器">
+            prop="eventName"
+            label="事件key">
           </el-table-column>
         </el-table>
       </el-collapse-item>
@@ -37,7 +41,14 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+// import eventMap from '@/core/event'
+import eventSelect from '@/components/event-select'
+
 export default {
+  components: {
+    eventSelect
+  },
   data () {
     return {
       activeNames: ['事件监听', '事件触发'],
@@ -54,22 +65,32 @@ export default {
           { max: 50, message: '描述最多 50 字符', trigger: 'blur' }
         ]
       },
-      listeners: [
-        {
-          event: '#btn@click.self',
-          handler: '{}'
-        },
-        {
-          event: 'this@mounted',
-          handler: "{console.log('222')}"
+      eventSelectShow: false
+    }
+  },
+  computed: {
+    ...mapState({
+      currentNode: state => state.schema.currentNode
+    }),
+    onEvents () {
+      const eventList = []
+      const eventMap = this.currentNode?.event?.on
+      if (eventMap) {
+        for (const key in eventMap) {
+          eventList.push({ eventName: key, ...eventMap[key] })
         }
-      ],
-      events: [
-        {
-          event: 'this@mounted',
-          handler: "{console.log('111')}"
+      }
+      return eventList
+    },
+    emitEvents () {
+      const eventList = []
+      const eventMap = this.currentNode?.event?.emit
+      if (eventMap) {
+        for (const key in eventMap) {
+          eventList.push({ eventType: key, eventName: eventMap[key] })
         }
-      ]
+      }
+      return eventList
     }
   },
   methods: {
@@ -79,6 +100,9 @@ export default {
     addNewListener () {
       console.log('addNewListener')
     },
+    addNewEimtter () {
+      this.eventSelectShow = true
+    },
     handleChange (val) {
       console.log(val)
     }
@@ -87,7 +111,7 @@ export default {
 </script>
 
 <style lang="scss">
-.status-setter {
+.event-setter {
   .el-collapse-item__header {
     height: 30px;
     text-indent: 10px;
@@ -109,6 +133,10 @@ export default {
     .input-input-label {
       flex: none;
     }
+  }
+
+  .event-select-wrapper {
+    position: relative;
   }
 }
 </style>
