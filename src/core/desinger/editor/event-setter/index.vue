@@ -3,6 +3,7 @@
     <el-collapse v-model="activeNames" @change="handleChange">
       <el-collapse-item title="事件监听" name="事件监听">
         <el-button type="primary" @click="addNewListener">添加监听器</el-button>
+        <!-- <event-select v-show="ELSelectShow" @select="handleEventSelect"></event-select> -->
         <el-table
           :data="onEvents"
           stripe
@@ -20,7 +21,7 @@
       <el-collapse-item title="事件触发" name="事件触发">
         <div class="event-select-wrapper">
           <el-button type="primary" @click="addNewEimtter">添加触发器</el-button>
-          <event-select v-show="eventSelectShow"></event-select>
+          <event-select v-show="eventSelectShow" @select="handleEventSelect"></event-select>
         </div>
         <el-table
           :data="emitEvents"
@@ -105,6 +106,9 @@ export default {
     },
     handleChange (val) {
       console.log(val)
+    },
+    handleEventSelect (eventType) {
+      this.currentNode.addEventEmitter(eventType)
     }
   }
 }

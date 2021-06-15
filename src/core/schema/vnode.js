@@ -75,6 +75,22 @@ class Vnode {
   insertAfter (node, index) {
     this.insertBefore(node, ++index)
   }
+
+  // 新增事件触发
+  addEventEmitter (eventType) {
+    const eventName = `#${this.nodeId}@${eventType}`
+    console.log('eventType', eventType, eventName)
+    if (!this.event) {
+      Vue.set(this, 'event', {
+        on: {},
+        emit: {
+          [eventType]: eventName
+        }
+      })
+    } else {
+      Vue.set(this.event.emit, eventType, eventName)
+    }
+  }
 }
 
 export default Vnode

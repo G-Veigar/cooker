@@ -1,16 +1,26 @@
 <template>
   <div class="event-select">
-    <div class="event-item" v-for="item in eventList" :key="item">{{item}}</div>
+    <div
+      class="event-item"
+      v-for="item in eventList"
+      :key="item"
+      @click="addEvent(item)">{{item}}</div>
   </div>
 </template>
 
 <script>
-const eventList = ['click']
+// TODO：抽象所有事件
+const eventList = ['click', 'dbclick']
 
 export default {
   data () {
     return {
       eventList
+    }
+  },
+  methods: {
+    addEvent (eventName) {
+      this.$emit('select', eventName)
     }
   }
 }

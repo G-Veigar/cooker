@@ -8,6 +8,7 @@ class Schema {
     // 初始化nodeTree
     this._initNodeTree(schemaData)
     this.setCurrentNode(this.nodeTree)
+    this.state = schemaData.state
   }
 
   get nodeTree () {
@@ -153,6 +154,11 @@ class Schema {
       })
     }
   }
+
+  // 设置全局状态值
+  setRootState (key, value) {
+
+  }
 }
 
 initUndoMethods()
@@ -262,7 +268,7 @@ const schema = new Schema({
         marginTop: '100px'
       },
       event: {
-        on: null,
+        on: {},
         emit: {
           click: '#mybtn@click'
         }
@@ -276,8 +282,15 @@ const schema = new Schema({
         color: '#369'
       },
       event: {
-        emit: null,
+        emit: {},
         on: {
+          '#123@click': {
+            type: 'base',
+            name: 'hide',
+            params: {
+              nodeId: '123'
+            }
+          },
           '#mybtn@click': {
             type: 'base',
             name: 'hide',
@@ -317,6 +330,7 @@ const schema = new Schema({
     }
   ],
   state: {
+    '123Show': true
   }
 })
 

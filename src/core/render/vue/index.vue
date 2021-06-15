@@ -9,9 +9,7 @@ export default {
   data () {
     return {
       // TODO：无法使用_开头
-      stateData: {
-        '123Show': true
-      }
+      stateData: {}
     }
   },
   props: {
@@ -78,12 +76,18 @@ export default {
         }
       })
       // 获取选中项配置数据
+    },
+    // 初始化全局state
+    initStateData (state) {
+      if (state) {
+        this.stateData = { ...state }
+      }
     }
   },
   render (h) {
     // eslint-disable-next-line no-unused-vars
     const { element, attribute, children } = schema2RenderParmas(this, this.schemaData, h, {})
-
+    this.initStateData(this.schemaData?.state)
     return h('div', {
       attrs: {
         id: 'cooker-app'
