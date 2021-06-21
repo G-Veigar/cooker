@@ -1,27 +1,29 @@
 <template>
-  <div id="desinger">
-    <co-toolbar></co-toolbar>
+  <div id="editor">
+    <left-bar></left-bar>
     <co-previewer
       ref="previewer"
       @currentElChange="handleCurrentElChange"
       @dropedNode="handleDropedNode"></co-previewer>
-    <co-editor></co-editor>
+    <right-bar></right-bar>
     <!-- <drag-img></drag-img> -->
   </div>
 </template>
 
 <script>
-import coToolbar from '@/core/desinger/toolbar/index.vue'
-import coEditor from '@/core/desinger/editor/index.vue'
-import coPreviewer from '@/core/desinger/previewer/index.vue'
+import leftBar from '@/core/editor/left-bar/index.vue'
+import rightBar from '@/core/editor/right-bar/index.vue'
+import coPreviewer from '@/core/editor/previewer/index.vue'
 // import dragImg from '@/components/drag-img/index.vue'
 import schema from '@/core/schema'
 import { mapState } from 'vuex'
+import keyboard from '@/utils/keyboard'
 
 export default {
+  name: 'editor',
   components: {
-    coToolbar,
-    coEditor,
+    leftBar,
+    rightBar,
     coPreviewer
     // dragImg
   },
@@ -63,6 +65,7 @@ export default {
     }
   },
   mounted () {
+    keyboard.init()
     // 优化第一次传递schema.nodeTree逻辑，预览器透出ready事件
     setTimeout(() => {
       this.$refs.previewer.emit({
@@ -75,7 +78,7 @@ export default {
 </script>
 
 <style lang="scss">
-#desinger {
+#editor {
   height: 100vh;
   display: flex;
   align-items: stretch;

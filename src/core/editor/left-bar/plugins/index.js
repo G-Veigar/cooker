@@ -3,7 +3,7 @@ import viewTree from './view-tree'
 import materialLib from './material-lib'
 import apiManager from './api-manager'
 import trackManager from './track-manager'
-import actionManager from './action-manager'
+// import actionManager from './action-manager'
 import resourceManager from './resource-manager'
 import pageManager from './page-manager'
 
@@ -38,11 +38,11 @@ const plugins = [
     icon: 'icon-3501shuju',
     component: trackManager
   },
-  {
-    name: 'action管理',
-    icon: 'icon-reactjs-fill',
-    component: actionManager
-  },
+  // {
+  //   name: 'action管理',
+  //   icon: 'icon-reactjs-fill',
+  //   component: actionManager
+  // },
   {
     name: '代码编辑器',
     icon: 'icon-code',

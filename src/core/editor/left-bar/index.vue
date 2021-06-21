@@ -8,7 +8,7 @@
 -->
 <template>
   <div class="toolbar">
-    <left-bar :plugins="pluginList" :current="currentPluginName" @pluginChange="handlePluginChange"></left-bar>
+    <left-bar-nav :plugins="pluginList" :current="currentPluginName" @pluginChange="handlePluginChange"></left-bar-nav>
     <div class="tool-wrapper">
       <keep-alive>
         <component v-if="currentPluginComponent" :is="currentPluginComponent"></component>
@@ -19,9 +19,12 @@
 
 <script>
 import toolPlugins from './plugins/index.js'
-import leftBar from './left-bar.vue'
+import leftBarNav from './left-bar-nav.vue'
 
 export default {
+  components: {
+    leftBarNav
+  },
   data () {
     return {
       code: '',
@@ -62,9 +65,6 @@ export default {
     handlePluginChange (name) {
       this.currentPluginName = name
     }
-  },
-  components: {
-    leftBar
   },
   created () {
     this.initPlugin()

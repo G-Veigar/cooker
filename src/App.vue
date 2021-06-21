@@ -13,12 +13,7 @@
 </template>
 
 <script>
-import keyboard from '@/utils/keyboard'
-
 export default {
-  mounted () {
-    keyboard.init()
-  }
 }
 </script>
 

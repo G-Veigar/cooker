@@ -7,7 +7,7 @@ const routes = [
   {
     path: '/',
     name: 'editor',
-    component: () => import(/* webpackChunkName: "editor" */ '@/pages/editor/index.vue')
+    component: () => import(/* webpackChunkName: "editor" */ '@/core/editor/index.vue')
   },
   {
     path: '/app',

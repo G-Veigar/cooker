@@ -86,7 +86,12 @@ const materialList = [
 ]
 
 // 物料icon映射map
-const materialIconMap = {}
+const materialIconMap = {
+  page: {
+    name: '页面',
+    icon: 'icon-page'
+  }
+}
 // 物料props映射map
 const materialPropsMap = {}
 

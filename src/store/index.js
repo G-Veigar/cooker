@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import schema from '@/core/schema'
 import schemaModule from '@/core/schema/store'
 
 Vue.use(Vuex)
