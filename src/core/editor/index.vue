@@ -18,6 +18,9 @@ import coPreviewer from '@/core/editor/previewer/index.vue'
 import schema from '@/core/schema'
 import { mapState } from 'vuex'
 import keyboard from '@/utils/keyboard'
+import installEditorPlugins from './plugins'
+
+installEditorPlugins()
 
 export default {
   name: 'editor',
