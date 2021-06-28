@@ -6,7 +6,10 @@
       <div class="tool-item" @click="operate('lineThrough')">L</div>
     </div>
     <div class="text-wrapper">
-      <div class="text" @input="handleInput">
+      <div
+        class="text"
+        :contenteditable="true"
+        @input="handleInput">
         {{text}}
       </div>
       <div class="edit-text" v-html="textHtml">
@@ -20,9 +23,10 @@ import { debounce } from 'lodash'
 
 export default {
   data () {
+    const text = 'thisAtext'
     return {
-      text: 'this is a text',
-      editText: 'this is a text',
+      text,
+      editText: text,
       selectLeftIndex: 0,
       selectRightIndex: 0,
       operationRecord: []
@@ -34,7 +38,25 @@ export default {
     },
     // TODO: 解析成html算法
     textHtml () {
-      return 'this is a text'
+      // this.operationRecord.forEach(record => {
+      //   const leftStr = this.editText.slice(0, record.offset[0] - 1)
+      //   const str = this.editText.slice(record.offset[0] - 1, record.offset[1] - 1)
+      //   const rightStr = this.editText.slice(record.offset[1] - 1)
+      //   console.log(leftStr)
+      //   console.log(str)
+      //   console.log(rightStr)
+      // })
+      const record = this.operationRecord[0]
+      if (record) {
+        const leftStr = this.editText.slice(0, record.offset[0] - 1)
+        const str = this.editText.slice(record.offset[0] - 1, record.offset[1] - 1)
+        const rightStr = this.editText.slice(record.offset[1] - 1)
+        const resStr = `<span>${leftStr}<span class='underline'>${str}</span>${rightStr}</span>`
+        console.log(resStr)
+        return resStr
+      } else {
+        return this.editText
+      }
     }
   },
   methods: {
@@ -47,7 +69,7 @@ export default {
       })
     },
     handleInput (e) {
-      this.text = e.target.innerText
+      this.editText = e.target.innerText
     },
     selecText (anchorOffset, focusOffset) {
       if (anchorOffset < focusOffset) {
@@ -103,6 +125,7 @@ export default {
     padding-right: 4px;
     caret-color: #000;
     color: transparent;
+    outline: none;
   }
   .edit-text {
     position: absolute;
@@ -111,5 +134,11 @@ export default {
     padding-left: 4px;
     padding-right: 4px;
   }
+}
+</style>
+
+<style lang="scss">
+.underline {
+  text-decoration: underline;
 }
 </style>
