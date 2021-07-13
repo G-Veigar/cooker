@@ -1,4 +1,5 @@
 import actionManager from './action-manager'
+import editorService from '../service'
 
 const pluginList = [
   actionManager
@@ -6,6 +7,6 @@ const pluginList = [
 
 export default function installEditorPlugins () {
   pluginList.forEach(pluginItem => {
-    pluginItem.install()
+    editorService.installPlugin(pluginItem)
   })
 }

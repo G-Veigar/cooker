@@ -1,0 +1,9 @@
+{
+  "name": "jimu-swipper",
+  "version": "1.0.0",
+  "dependencies": {
+    "commonn-button": "3.8.1",
+    "commonn-image": "2.0.0"
+  },
+  "template": ""
+}

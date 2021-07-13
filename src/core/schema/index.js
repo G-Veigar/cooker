@@ -268,7 +268,9 @@ const schema = new Schema({
       // float: 'none',
       // clear: 'both'
     },
-    props: {},
+    props: {
+      // innerText: ''
+    },
     event: {},
     children: [
       {
