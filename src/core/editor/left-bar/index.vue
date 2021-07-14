@@ -8,7 +8,10 @@
 -->
 <template>
   <div class="toolbar">
-    <left-bar-nav :plugins="pluginList" :current="currentPluginName" @pluginChange="handlePluginChange"></left-bar-nav>
+    <left-bar-nav
+      :plugins="pluginList"
+      :current="currentPluginName"
+      @pluginChange="handlePluginChange"></left-bar-nav>
     <div class="tool-wrapper">
       <keep-alive>
         <component v-if="currentPluginComponent" :is="currentPluginComponent"></component>
@@ -18,8 +21,9 @@
 </template>
 
 <script>
-import toolPlugins from './plugins/index.js'
 import leftBarNav from './left-bar-nav.vue'
+import editorService from '@/core/editor/service'
+import store from '@/store'
 
 export default {
   components: {
@@ -28,18 +32,31 @@ export default {
   data () {
     return {
       code: '',
-      currentPluginName: '',
-      pluginList: null, // 插件列表
       pluginComponentMap: null // 插件名和组件对应的map
     }
   },
   computed: {
+    activePlugin () {
+      return store.state.editor.activePlugin
+    },
+    currentPluginName () {
+      return this.activePlugin?.name
+    },
     currentPluginComponent () {
-      if (this.pluginComponentMap && this.currentPluginName) {
-        return this.pluginComponentMap[this.currentPluginName]
-      } else {
-        return null
+      return this.activePlugin?.leftPanel
+    },
+    editorPlugins () {
+      return editorService.plugins
+    },
+    pluginList () {
+      const list = []
+      for (const pluginName in this.editorPlugins) {
+        list.push({
+          name: pluginName,
+          icon: this.editorPlugins[pluginName].icon
+        })
       }
+      return list
     }
   },
   watch: {
@@ -48,26 +65,12 @@ export default {
     }
   },
   methods: {
-    initPlugin () {
-      const pluginList = []
-      const pluginComponentMap = {}
-      toolPlugins.forEach(plugin => {
-        pluginList.push({
-          name: plugin.name,
-          icon: plugin.icon
-        })
-        pluginComponentMap[plugin.name] = plugin.component
-      })
-      this.currentPluginName = pluginList[0].name
-      this.pluginList = pluginList
-      this.pluginComponentMap = pluginComponentMap
-    },
     handlePluginChange (name) {
-      this.currentPluginName = name
+      editorService.switchToPlugin(name)
     }
   },
-  created () {
-    this.initPlugin()
+  mounted () {
+    editorService.switchToPlugin('组件库')
   }
 }
 </script>

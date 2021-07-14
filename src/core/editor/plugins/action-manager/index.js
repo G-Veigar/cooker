@@ -1,12 +1,11 @@
-import lelfPannel from './left-pannel.vue'
+import leftPanel from './left-panel.vue'
 
 export default {
-  name: '物料库',
+  name: 'action管理', // name唯一
   install (editor) {
     editor.registerLelfPannel({
-      name: '物料库', // name唯一
-      icon: 'icon-component',
-      component: lelfPannel
+      icon: 'icon-text-pages',
+      leftPanel
     })
     editor.registerHooks({
       beforeElementAdded (element) {
