@@ -40,12 +40,22 @@ class EditorService {
   registerHooks (options) {
     for (const hookName in options) {
       const callback = options[hookName]
-      this._registerHook(hookName, callback)
+      this.registerHook(hookName, callback)
     }
   }
 
-  _registerHook (hookName, callback) {
+  registerHook (hookName, callback) {
     event.on(EDITOR_EVENT_SCOPE + hookName, callback)
+  }
+
+  // TODO: 从schema层迁移到editor
+  undo () {
+
+  }
+
+  // TODO: 从schema层迁移到editor
+  redo () {
+
   }
 }
 

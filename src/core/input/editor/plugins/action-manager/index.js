@@ -8,7 +8,7 @@ export default {
       leftPanel
     })
     editor.registerHooks({
-      beforeElementAdded (element) {
+      beforeElementAdded (element, next) {
         console.log('hooks: beforeElementAdded')
       },
       elementAdded (element) {

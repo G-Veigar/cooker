@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import cookerRender from '@/core/render/vue/index.vue'
+import cookerRender from '@/core/code/render/vue/index.vue'
 import cookerModal from '@/core/material/modal'
 
 const editMode = !(window.location.href.includes('preview'))

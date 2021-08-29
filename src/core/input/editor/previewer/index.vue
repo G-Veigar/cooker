@@ -109,7 +109,7 @@ export default {
   },
   mounted () {
     this.viewer = new Previewer('#viewer-editable', {
-      src: '/app'
+      src: '/test'
     })
 
     this.viewer.on('currentElChange', data => {

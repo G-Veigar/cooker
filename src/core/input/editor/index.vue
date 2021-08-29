@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import leftBar from '@/core/editor/left-bar/index.vue'
-import rightBar from '@/core/editor/right-bar/index.vue'
-import coPreviewer from '@/core/editor/previewer/index.vue'
+import leftBar from '@/core/input/editor/left-bar/index.vue'
+import rightBar from '@/core/input/editor/right-bar/index.vue'
+import coPreviewer from '@/core/input/editor/previewer/index.vue'
 // import dragImg from '@/components/drag-img/index.vue'
 import schema from '@/core/schema'
 import { mapState } from 'vuex'

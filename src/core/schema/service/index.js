@@ -3,7 +3,7 @@ import SchemaNode from './schema-node'
 import Vue from 'vue'
 import Undo from '@/utils/undo'
 
-class Schema {
+class SchemaService {
   constructor (schemaData) {
     // 初始化nodeTree
     this._initNodeTree(schemaData)
@@ -167,7 +167,7 @@ function initUndoMethods () {
   // 初始化undoHelper
   const undoHelper = new Undo()
   window.undo = undoHelper
-  Schema.prototype.undoHelper = undoHelper
+  SchemaService.prototype.undoHelper = undoHelper
 
   // 原型增加appendNode与removeNode可逆的undo操作
   const {
@@ -175,7 +175,7 @@ function initUndoMethods () {
     _removeNodeFrom, _$undoRemoveNodeFrom,
     _insertAfter, _$undoInsertAfter,
     _setNodeProp, _$undoSetNodeProp
-  } = Schema.prototype
+  } = SchemaService.prototype
 
   const appendNodeHelper = undoHelper.add({
     redo: _appendNode,
@@ -193,13 +193,13 @@ function initUndoMethods () {
     redo: _setNodeProp,
     undo: _$undoSetNodeProp
   })
-  Schema.prototype.appendNode = appendNodeHelper
-  Schema.prototype.removeNodeFrom = removeNodeFromHelper
-  Schema.prototype.insertAfter = insertAfterHelper
-  Schema.prototype.setNodeProp = setNodePropHelper
+  SchemaService.prototype.appendNode = appendNodeHelper
+  SchemaService.prototype.removeNodeFrom = removeNodeFromHelper
+  SchemaService.prototype.insertAfter = insertAfterHelper
+  SchemaService.prototype.setNodeProp = setNodePropHelper
 }
 
-const schema = new Schema({
+const schemaService = new SchemaService({
   title: '抽奖活动', // 页面title
   manifest: {
     version: '1.0.0', // 当前活动版本
@@ -345,16 +345,8 @@ const schema = new Schema({
   },
   // 全局状态
   state: {
-    '123Show': true,
-    '123For': [
-      {
-        text: '123'
-      },
-      {
-        text: '456'
-      }
-    ]
+    '123Show': true
   }
 })
 
-export default schema
+export default schemaService

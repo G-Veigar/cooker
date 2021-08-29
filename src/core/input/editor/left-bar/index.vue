@@ -22,7 +22,7 @@
 
 <script>
 import leftBarNav from './left-bar-nav.vue'
-import editorService from '@/core/editor/service'
+import editorService from '@/core/input/editor/service'
 import store from '@/store'
 
 export default {
